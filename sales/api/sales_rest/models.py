@@ -30,17 +30,17 @@ class Customer(models.Model):
 class SalesRecord(models.Model):
     automobile = models.ForeignKey(
         AutoVO,
-        related_name="automobile",
+        related_name="sales",
         on_delete=models.CASCADE,
     )
     salesperson = models.ForeignKey(
         SalesPerson,
-        related_name="salesperson",
+        related_name="sales",
         on_delete=models.CASCADE
     )
     customer = models.ForeignKey(
         Customer,
-        related_name="customer",
+        related_name="sales",
         on_delete=models.CASCADE
     )
     sales_price = models.CharField(max_length=100)

@@ -52,10 +52,10 @@ class SalesRecordEncoder(ModelEncoder):
         "customer": CustomerEncoder(),
     }
 
-# Create your views here.
+####### Create your views here ########
 
 
-# view function to show all the salesperson
+############ view function to show all the salesperson#######
 @require_http_methods(["GET", "POST"])
 def api_list_salesperson(request):
     if request.method == "GET":
@@ -143,3 +143,52 @@ def api_show_customer(request, id):
     else:
         count, _ = Customer.objects.get(id=id).delete()
         return JsonResponse({"deleted": count > 0})
+
+
+########## view function for SalesRecord #############
+@require_http_methods(["GET", "POST"])
+def api_list_salesrecords(request):
+    if request.method == "GET":
+        sales = SalesRecord.objects.all()
+        return JsonResponse(
+            {"sales": sales},
+            encoder=SalesRecordEncoder,
+        )
+
+    else:
+        content = json.loads(request.body)
+
+        try:
+            # adding the key automobile_href into the content
+            automobile_href = content["automobile"]
+            # automobile is a record of just the import_href of AutoVO model
+            automobile = AutoVO.objects.get(import_href=automobile_href)
+            if automobile.available is True:
+              # recall how to make a key, value pair in an object
+                content["automobile"] = automobile
+                # content is the body in which we pass through insomnia
+
+                salesperson = SalesPerson.objects.get(
+                    name=content["salesperson"])
+                content["salesperson"] = salesperson
+
+                # we are setting a variable salesperson as a record of SalesPerson.objects.get
+                # the .objects.get(name=content["salesperson"]) is going to return our values from the SalesPerson model
+                content["salesperson"] = salesperson
+                # later when we return the json response, in line 164, we will return a list of salesperson
+
+                customer = Customer.objects.get(name=content["customer"])
+                content["customer"] = customer
+
+                salesrecord = SalesRecord.objects.create(**content)
+        except AutoVO.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid Automobile"},
+                status=400
+            )
+
+        return JsonResponse(
+            salesrecord,
+            encoder=SalesRecordEncoder,
+            safe=False,
+        )
