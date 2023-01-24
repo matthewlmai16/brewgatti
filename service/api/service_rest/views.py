@@ -14,7 +14,7 @@ def api_list_technicians(request):
             {"technicians": technicians},
             encoder=TechnicianListEncoder
         )
-    elif request.method == "POST":
+    else: #POST
         content = json.loads(request.body)
         technicians = Technician.objects.create(**content)
         return JsonResponse(
@@ -73,25 +73,35 @@ def api_list_appointments(request, vin=None):
 @require_http_methods(["GET", "DELETE", "PUT"])
 def api_show_appointments(request, pk):
     if request.method == "GET":
-        appointments = Appointment.objects.get(id=pk)
-        return JsonResponse(
-            appointments,
-            encoder=AppointmentEncoder,
-            safe=False
-        )
+        try:
+            appointments = Appointment.objects.get(id=pk)
+            return JsonResponse(
+                appointments,
+                encoder=AppointmentEncoder,
+                safe=False
+            )
+        except Appointment.DoesNotExist:
+            response = JsonResponse({"message": "Does not exist"})
+            response.status_code=404
+            return response
+
     elif request.method == "DELETE":
-        count, _ = Appointment.objects.get(id=pk).delete()
-        return JsonResponse({"deleted": count > 0})
-    else:
+        try:
+            count, _ = Appointment.objects.get(id=pk).delete()
+            return JsonResponse({"deleted": count > 0})
+        except Appointment.DoesNotExist:
+            response = JsonResponse({"message": "Does not exist"})
+            response.status_code=404
+
+    else: #PUT
         content = json.loads(request.body)
         try:
             if "appointment" in content:
                 appointment = Appointment.objects.get(id=pk)
         except Appointment.DoesNotExist:
-            return JsonResponse(
-                {"message": "Appointment does not exist"},
-                status=400,
-            )
+            response = JsonResponse({"message": "Does not exist"})
+            response.status_code=404
+
         Appointment.objects.filter(id=pk).update(**content)
         appointment = Appointment.objects.get(id=pk)
         return JsonResponse(
