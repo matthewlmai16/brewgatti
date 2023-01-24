@@ -10,6 +10,7 @@ class AutoVO(models.Model):
     year = models.PositiveSmallIntegerField()
     vin = models.CharField(max_length=17, unique=True)
     available = models.BooleanField(default=True)
+    import_href = models.CharField(max_length=100, unique=True, null=True)
 
 
 class SalesPerson(models.Model):
