@@ -2,8 +2,8 @@
 
 Team:
 
+* Matthew Mai - Service microservice
 * Anthony Pham - Sales Microservice
-* Person 2 - Which microservice?
 
 ## Design
 
