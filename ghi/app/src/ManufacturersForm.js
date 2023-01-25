@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function ManufacturerForm({getManufacturers}) {
 
@@ -47,7 +47,7 @@ function ManufacturerForm({getManufacturers}) {
                 <form onSubmit={handleSubmit} id="create-appointment-form">
                     <div className="form-floating mb-3">
                         <input onChange={handleNameChange} placeholder="Manufacturer name" required type="text" name = "name" id="name" className="form-control" value={name}/>
-                        <label htmlFor="name">Technician name</label>
+                        <label htmlFor="name">Manufacturer name</label>
                     </div>
                     <button className="btn btn-primary">Create</button>
                 </form>
