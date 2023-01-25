@@ -8,6 +8,8 @@ import SalesRecordForm from './SalesRecordForm';
 
 import ManufacturersList from './ManufacturersList';
 import ManufacturerForm from './ManufacturersForm';
+import ModelsList from './ModelsList';
+
 import AppointmentsForm from './AppointmentsForm';
 import AppointmentsList from './AppointmentsList';
 import TechnicianForm from './TechnicianForm';
@@ -17,6 +19,7 @@ import ServiceHistory from './ServiceHistory';
 
 function App() {
   const [manufacturers, setManufacturers] = useState([]);
+  const [models, setModels] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [technicians, setTechnicians] = useState([]);
 
@@ -29,6 +32,18 @@ function App() {
       const data = await response.json();
       const manufacturers = data.manufacturers;
       setManufacturers(manufacturers);
+    }
+  }
+
+  const getModels = async () => {
+    const url = 'http://localhost:8100/api/models/';
+
+    const response = await fetch(url);
+
+    if (response.ok) {
+      const data = await response.json();
+      const models = data.models;
+      setModels(models);
     }
   }
 
@@ -56,7 +71,7 @@ function App() {
     }
   }
 
-  useEffect(() => {getManufacturers(); getAppointments(); getTechnicians()}, [setManufacturers, setAppointments, setTechnicians]);
+  useEffect(() => {getManufacturers(); getModels(); getAppointments(); getTechnicians()}, [setManufacturers, setModels, setAppointments, setTechnicians]);
 
   return (
     <BrowserRouter>
@@ -71,6 +86,12 @@ function App() {
           {/* Routes for manufacturers */}
           <Route path="manufacturers">
             <Route path="list" element={<ManufacturersList  manufacturers={manufacturers} />} />
+            <Route path="new" element={<ManufacturerForm getManufacturers={getManufacturers} />} />
+          </Route>
+
+          {/* Routes for vehicle models */}
+          <Route path="models">
+            <Route path="list" element={<ModelsList  models={models} getModels={getModels} />} />
             <Route path="new" element={<ManufacturerForm getManufacturers={getManufacturers} />} />
           </Route>
 
