@@ -7,9 +7,13 @@ import SalesPersonForm from './SalesPersonForm';
 import CustomerForm from './CustomerForm';
 import SalesRecordForm from './SalesRecordForm';
 
+import AppointmentsForm from './AppointmentsForm';
+import TechnicianForm from './TechnicianForm';
+import TechnicianList from './TechnicianList';
 
 function App() {
   const [appointments, setAppointments] = useState([]);
+  const [technicians, setTechnicians] = useState([]);
 
   const getAppointments = async () => {
     const url = 'http://localhost:8080/api/appointments/';
@@ -23,8 +27,19 @@ function App() {
     }
   }
 
-  useEffect(() => {getAppointments()}, [setAppointments]);
-  console.log(appointments)
+  const getTechnicians = async () => {
+    const url = 'http://localhost:8080/api/technicians/';
+
+    const response = await fetch(url);
+
+    if (response.ok) {
+      const data = await response.json();
+      const technicians = data.technicians;
+      setTechnicians(technicians);
+    }
+  }
+
+  useEffect(() => {getAppointments(); getTechnicians()}, [setAppointments, setTechnicians]);
 
   return (
     <BrowserRouter>
@@ -36,6 +51,9 @@ function App() {
           <Route path="/salesperson/new/" element={<SalesPersonForm />} />
           <Route path="/customers/new/" element={<CustomerForm />} />
 
+          <Route path="/appointments/new/" element={<AppointmentsForm getAppointments={getAppointments} />} />
+          <Route path="/technicians/list/" element={<TechnicianList technicians={technicians} />} />
+          <Route path="/technicians/new/" element={<TechnicianForm getTechnicians={getTechnicians} />} />
         </Routes>
       </div>
     </BrowserRouter>
