@@ -6,6 +6,7 @@ import AppointmentsList from './AppointmentsList';
 import AppointmentsForm from './AppointmentsForm';
 import TechnicianForm from './TechnicianForm';
 import TechnicianList from './TechnicianList';
+import ServiceHistory from './ServiceHistory';
 
 function App() {
   const [appointments, setAppointments] = useState([]);
@@ -47,6 +48,7 @@ function App() {
           <Route path="/appointments/new/" element={<AppointmentsForm getAppointments={getAppointments} />} />
           <Route path="/technicians/list/" element={<TechnicianList technicians={technicians} />} />
           <Route path="/technicians/new/" element={<TechnicianForm getTechnicians={getTechnicians} />} />
+          <Route path="/service/history/" element={<ServiceHistory appointments={appointments} getAppointments={getAppointments} setAppointments={setAppointments}/>} />
         </Routes>
       </div>
     </BrowserRouter>
