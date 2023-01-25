@@ -95,12 +95,8 @@ def api_show_appointments(request, pk):
 
     else: #PUT
         content = json.loads(request.body)
-        try:
-            if "appointment" in content:
-                appointment = Appointment.objects.get(id=pk)
-        except Appointment.DoesNotExist:
-            response = JsonResponse({"message": "Does not exist"})
-            response.status_code=404
+        if "appointment" in content:
+            appointment = Appointment.objects.get(id=pk)
 
         Appointment.objects.filter(id=pk).update(**content)
         appointment = Appointment.objects.get(id=pk)

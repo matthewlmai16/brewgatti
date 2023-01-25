@@ -27,6 +27,7 @@ class AppointmentEncoder(ModelEncoder):
         "reason",
         "vip",
         "finished",
+        "technician_name",
         "id",
     ]
     encoders = {
