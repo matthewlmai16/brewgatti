@@ -3,6 +3,10 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import { useEffect, useState } from 'react';
 import AppointmentsList from './AppointmentsList';
+import SalesPersonForm from './SalesPersonForm';
+import CustomerForm from './CustomerForm';
+import SalesRecordForm from './SalesRecordForm';
+
 import AppointmentsForm from './AppointmentsForm';
 import TechnicianForm from './TechnicianForm';
 import TechnicianList from './TechnicianList';
@@ -45,6 +49,9 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/appointments/list/" element={<AppointmentsList appointments={appointments} getAppointments={getAppointments} />} />
+          <Route path="/salesperson/new/" element={<SalesPersonForm />} />
+          <Route path="/customers/new/" element={<CustomerForm />} />
+
           <Route path="/appointments/new/" element={<AppointmentsForm getAppointments={getAppointments} />} />
           <Route path="/technicians/list/" element={<TechnicianList technicians={technicians} />} />
           <Route path="/technicians/new/" element={<TechnicianForm getTechnicians={getTechnicians} />} />
