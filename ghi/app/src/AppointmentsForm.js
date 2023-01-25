@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-function AppointmentsForm({getAppointments, getTechnicians}) {
-    const [technicians, setTechnicians] = useState([]);
+function AppointmentsForm({getAppointments, technicians}) {
 
     const [vin, setVin] = useState('');
     const [customerName, setCustomerName] = useState('');
@@ -65,12 +64,6 @@ function AppointmentsForm({getAppointments, getTechnicians}) {
             getAppointments();
         }
     }
-
-    getTechnicians();
-
-    useEffect(() => {
-        getTechnicians();
-    }, [setTechnicians]);
 
 
     return (

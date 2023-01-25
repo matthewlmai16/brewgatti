@@ -12,21 +12,14 @@ function ServiceHistory({appointments, setAppointments}) {
     }
 
     const handleSearch = (event) => {
-        if (vinSearch.length === 0) {
-            const filteredAppointments = appointments.filter((appointment) =>
-                appointment.vin.includes(vinSearch)
-            );
-            setAppointments(filteredAppointments)
-        }
-
-        else {
+        if (vinSearch.length !== 0) {
             event.preventDefault();
-            const filteredAppointments = appointments.filter((appointment) =>
-                appointment.vin.includes(vinSearch)
-            );
-            setAppointments(filteredAppointments)
         }
-    }
+        const filteredAppointments = appointments.filter((appointment) =>
+            appointment.vin.includes(vinSearch)
+        );
+        setAppointments(filteredAppointments)
+        }
 
 
     return (
