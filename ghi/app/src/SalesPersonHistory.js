@@ -3,6 +3,11 @@ import React, {useEffect, useState} from 'react';
 function SalesPersonHistory() {
 
   /// set variables and set state
+  const [salesperson, setSalesPerson] = useState('');
+  const handleSalesPersonChange = (event) => {
+    const value = event.target.value;
+    setSalesPerson(value);
+  }
 
   const [salespersons, setSalesPersons] = useState([]);
   const handleSalesPersonsChange = (event) => {
@@ -10,37 +15,10 @@ function SalesPersonHistory() {
     setSalesPersons(value);
   }
 
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const data = {};
-    data.automobiles = automobiles;
-    data.salespersons = salespersons;
-    data.customers = customers;
-    data.sales_price = sales_price;
-
-
-    const salesrecordUrl = "http://localhost:8090/api/salesrecords/";
-    const fetchConfig = {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    };
-
-    const response = await fetch(salesrecordUrl, fetchConfig);
-    if (response.ok) {
-      const newSalesRecord = await response.json();
-      console.log(newSalesRecord)
-
-      setAutomobiles('');
-      setCustomers('');
-      setSalesPersons('');
-      setSalesPrice('');
-    }
-
+  const [salesrecords, setSalesRecords] = useState([]);
+  const handleSalesRecordsChange = (event) => {
+    const value = event.target.value;
+    setSalesRecords(value);
   }
 
 
@@ -61,39 +39,81 @@ const fetchSalesPersons = async () => {
   }
 }
 
+const fetchSalesRecords = async () => {
+  const salesrecordUrl = 'http://localhost:8090/api/salesrecords/'
+
+  const response = await fetch(salesrecordUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data)
+    setSalesRecords(data.sales);
+  }
+
+}
+
 
 ////////////////// useEffect //////
 
 useEffect(() => {
   fetchSalesPersons();
+  fetchSalesRecords();
 }, []);
-
-
 
 
   /////////// our jsx form //////////////
 
   return (
+    <>
     <div className="row">
         <div className="offset-3 col-6">
             <div className="shadow p-4 mt-4">
-            <h1>Create a new Salesperson!</h1>
-            <form onSubmit={handleSubmit} id="create-html-form">
-                <div className="form-floating mb-3">
-                    <input onChange={handleNameChange} value={name} placeholder="salesperson name" required type="text" name = "name" className="form-control"/>
-                    <label htmlFor="name">Name</label>
+            <h1>Select a Salesperson!</h1>
+            <div className="mb-3">
+                    <select value={salesperson} onChange={handleSalesPersonChange} required  name="salesperson" className="form-select">
+                    <option value="">Choose a Sales Person</option>
+                    {salespersons.map(salesperson => {
+                            return (
+                                <option key={salesperson.id} value={salesperson.name}>
+                                    {salesperson.name}
+                                </option>
+                            );
+                        })}
+                    </select>
+                    <div>
+                    <table className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Sales Person</th>
+                          <th>Customer</th>
+                          <th>VIN</th>
+                          <th>Sales Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* we want salesrecords.salesperson.name to equal value in line 68 */}
+                        {salesrecords.filter(salesrecord => salesrecord.salesperson.name === salesperson)
+                        .map(salesrecord => {
+                          return (
+                            <tr key={salesrecord.id}>
+                                <td>{salesrecord.salesperson.name}</td>
+                                <td>{salesrecord.customer.name}</td>
+                                <td>{salesrecord.automobile.vin}</td>
+                                <td>${salesrecord.sales_price}</td>
+
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    </div>
                 </div>
-                <div className="form-floating mb-3">
-                    <input onChange={handleEmployeeNumberChange} value={employee_number} placeholder="model name" required type="text" name = "model_name" id="model_name" className="form-control" />
-                    <label htmlFor="employee_number">Employee Number </label>
-                </div>
-                <button className="btn btn-primary">Create</button>
-            </form>
             </div>
         </div>
     </div>
+    </>
   )
 }
 
 
-export default SalesPersonForm;
+export default SalesPersonHistory;

@@ -2,7 +2,31 @@ import React, {useEffect, useState} from 'react';
 
 function SalesRecordForm() {
 
-  /// set variables and set state
+  const [automobile, setAutomobile] = useState('');
+
+  const [salesperson, setSalesPerson] = useState('');
+
+  const [customer, setCustomer] = useState('');
+
+
+  const handleAutomobileChange = (event) => {
+    const value = event.target.value;
+    setAutomobile(value);
+  }
+
+  const handleSalesPersonChange = (event) => {
+    const value = event.target.value;
+    setSalesPerson(value);
+  }
+
+  const handleCustomerChange = (event) => {
+    const value = event.target.value;
+    setCustomer(value);
+  }
+
+
+  /// set variables and set state for array
+
 
   const [automobiles, setAutomobiles] = useState([]);
 
@@ -10,7 +34,7 @@ function SalesRecordForm() {
 
   const [customers, setCustomers] = useState([]);
 
-  const [sales_price, setSalesPrice] = useState([]);
+  const [sales_price, setSalesPrice] = useState('');
 
 
   const handleAutomobilesChange = (event) => {
@@ -127,11 +151,11 @@ useEffect(() => {
             <h1>Create a sales record</h1>
             <form onSubmit={handleSubmit} id="create-sales-record-form">
                 <div className="mb-3">
-                    <select value={automobiles} onChange={handleAutomobilesChange} required name="automobiles" className="form-select">
+                    <select value={automobile} onChange={handleAutomobileChange} required name="automobiles" className="form-select">
                     <option value="">Choose a Automobile</option>
                     {automobiles.map(automobile => {
                             return (
-                                <option key={automobile.import_href} value={automobile.import_href}>
+                                <option key={automobile.id} value={automobile.import_href}>
                                 {automobile.vin}
                                 </option>
                             );
@@ -139,7 +163,7 @@ useEffect(() => {
                     </select>
                 </div>
                 <div className="mb-3">
-                    <select value={salespersons} onChange={handleSalesPersonsChange} required  name="salespersons" className="form-select">
+                    <select value={salesperson} onChange={handleSalesPersonChange} required  name="salespersons" className="form-select">
                     <option value="">Choose a Sales Person</option>
                     {salespersons.map(salesperson => {
                             return (
@@ -151,7 +175,7 @@ useEffect(() => {
                     </select>
                 </div>
                 <div className="mb-3">
-                    <select value={customers} onChange={handleCustomersChange} required name="customer" className="form-select">
+                    <select value={customer} onChange={handleCustomerChange} required name="customer" className="form-select">
                     <option value="">Choose a Customer</option>
                     {customers.map(customer => {
                             return (
