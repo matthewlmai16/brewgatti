@@ -7,6 +7,7 @@ import SalesPersonForm from './SalesPersonForm';
 import CustomerForm from './CustomerForm';
 import SalesRecordForm from './SalesRecordForm';
 import SalesPersonHistory from './SalesPersonHistory';
+import SalesList from './SalesList';
 
 import AppointmentsForm from './AppointmentsForm';
 import TechnicianForm from './TechnicianForm';
@@ -59,7 +60,7 @@ function App() {
             <Route path="new" element={<CustomerForm />} />
           </Route>
           {/* Route for salesrecords */}
-          <Route path="salesrecords">
+          <Route path="salesrecords" element={<SalesList />} >
             <Route path="new" element={<SalesRecordForm/>} />
           </Route>
 
