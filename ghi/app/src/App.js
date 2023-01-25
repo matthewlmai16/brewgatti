@@ -3,6 +3,10 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import { useEffect, useState } from 'react';
 import AppointmentsList from './AppointmentsList';
+import SalesPersonForm from './SalesPersonForm';
+import CustomerForm from './CustomerForm';
+import SalesRecordForm from './SalesRecordForm';
+
 
 function App() {
   const [appointments, setAppointments] = useState([]);
@@ -29,6 +33,9 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/appointments/list/" element={<AppointmentsList appointments={appointments} getAppointments={getAppointments} />} />
+          <Route path="/salesperson/new/" element={<SalesPersonForm />} />
+          <Route path="/customers/new/" element={<CustomerForm />} />
+
         </Routes>
       </div>
     </BrowserRouter>
