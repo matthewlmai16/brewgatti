@@ -82,9 +82,6 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/salesperson/new/" element={<SalesPersonForm />} />
-          <Route path="/customers/new/" element={<CustomerForm />} />
-          <Route path="/salesrecords/new/" element={<SalesRecordForm/>} />
 
           {/* Routes for manufacturers */}
           <Route path="manufacturers">
@@ -110,7 +107,8 @@ function App() {
           </Route>
 
           {/* Route for salesrecords */}
-          <Route path="salesrecords" element={<SalesList />} >
+          <Route path="salesrecords" >
+            <Route path="list" element={<SalesList />} />
             <Route path="new" element={<SalesRecordForm/>} />
           </Route>
 

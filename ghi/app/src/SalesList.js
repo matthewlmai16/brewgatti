@@ -17,7 +17,7 @@ const fetchAllSales = async () => {
     /// look in our insomnia, when we get a list of salesperson
     /// it returns an object where the key is sales_staff and the
     /// value is a list of sales_staff
-    setSalesChange(data);
+    setSalesChange(data.sales);
   }
 }
 
