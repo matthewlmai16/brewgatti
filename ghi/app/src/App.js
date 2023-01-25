@@ -3,9 +3,13 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import { useEffect, useState } from 'react';
 import AppointmentsList from './AppointmentsList';
+import AppointmentsForm from './AppointmentsForm';
+import TechnicianForm from './TechnicianForm';
+import TechnicianList from './TechnicianList';
 
 function App() {
   const [appointments, setAppointments] = useState([]);
+  const [technicians, setTechnicians] = useState([]);
 
   const getAppointments = async () => {
     const url = 'http://localhost:8080/api/appointments/';
@@ -19,8 +23,19 @@ function App() {
     }
   }
 
-  useEffect(() => {getAppointments()}, [setAppointments]);
-  console.log(appointments)
+  const getTechnicians = async () => {
+    const url = 'http://localhost:8080/api/technicians/';
+
+    const response = await fetch(url);
+
+    if (response.ok) {
+      const data = await response.json();
+      const technicians = data.technicians;
+      setTechnicians(technicians);
+    }
+  }
+
+  useEffect(() => {getAppointments(); getTechnicians()}, [setAppointments, setTechnicians]);
 
   return (
     <BrowserRouter>
@@ -29,6 +44,9 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/appointments/list/" element={<AppointmentsList appointments={appointments} getAppointments={getAppointments} />} />
+          <Route path="/appointments/new/" element={<AppointmentsForm getAppointments={getAppointments} />} />
+          <Route path="/technicians/list/" element={<TechnicianList technicians={technicians} />} />
+          <Route path="/technicians/new/" element={<TechnicianForm getTechnicians={getTechnicians} />} />
         </Routes>
       </div>
     </BrowserRouter>
