@@ -28,7 +28,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/appointments/list/" element={<AppointmentsList appointments={appointments} />} />
+          <Route path="/appointments/list/" element={<AppointmentsList appointments={appointments} getAppointments={getAppointments} />} />
         </Routes>
       </div>
     </BrowserRouter>
