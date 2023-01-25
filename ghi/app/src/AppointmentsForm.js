@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function AppointmentsForm({getAppointments}) {
+function AppointmentsForm({getAppointments, getTechnicians}) {
     const [technicians, setTechnicians] = useState([]);
 
     const [vin, setVin] = useState('');
@@ -66,22 +66,11 @@ function AppointmentsForm({getAppointments}) {
         }
     }
 
-
-    const fetchData = async () => {
-        const url = 'http://localhost:8080/api/technicians/'
-
-        const response = await fetch(url);
-
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data)
-            setTechnicians(data.technicians);
-        }
-    }
+    getTechnicians();
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        getTechnicians();
+    }, [setTechnicians]);
 
 
     return (

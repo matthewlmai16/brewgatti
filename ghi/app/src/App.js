@@ -48,7 +48,6 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/appointments/list/" element={<AppointmentsList appointments={appointments} getAppointments={getAppointments} />} />
           <Route path="salesperson">
             <Route path="new" element={<SalesPersonForm />} />
             <Route path="history" element={<SalesPersonHistory />} />
@@ -56,13 +55,28 @@ function App() {
           <Route path="customer" >
             <Route path="new" element={<CustomerForm />} />
           </Route>
+          {/* Route for salesrecords */}
           <Route path="salesrecords">
             <Route path="new" element={<SalesRecordForm/>} />
           </Route>
-          <Route path="/appointments/new/" element={<AppointmentsForm getAppointments={getAppointments} />} />
-          <Route path="/technicians/list/" element={<TechnicianList technicians={technicians} />} />
-          <Route path="/technicians/new/" element={<TechnicianForm getTechnicians={getTechnicians} />} />
-          <Route path="/service/history/" element={<ServiceHistory appointments={appointments} getAppointments={getAppointments} setAppointments={setAppointments}/>} />
+
+          {/* Routes for technicians */}
+          <Route path="technicians">
+            <Route path="list" element={<TechnicianList technicians={technicians} />} />
+            <Route path="new" element={<TechnicianForm getTechnicians={getTechnicians} />} />
+          </Route>
+
+          {/* Routes for appointments */}
+          <Route path="appointments">
+            <Route path="list" element={<AppointmentsList appointments={appointments} getAppointments={getAppointments} />} />
+            <Route path="new" element={<AppointmentsForm getAppointments={getAppointments} getTechnicians={getTechnicians} />} />
+          </Route>
+
+          {/* Route for service history */}
+          <Route path="services">
+            <Route path="history" element={<ServiceHistory appointments={appointments} getAppointments={getAppointments} setAppointments={setAppointments}/>} />
+          </Route>
+
         </Routes>
       </div>
     </BrowserRouter>
