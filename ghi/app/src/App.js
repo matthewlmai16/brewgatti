@@ -9,6 +9,7 @@ import SalesRecordForm from './SalesRecordForm';
 import ManufacturersList from './ManufacturersList';
 import ManufacturerForm from './ManufacturersForm';
 import ModelsList from './ModelsList';
+import ModelsForm from './ModelsForm';
 
 import AppointmentsForm from './AppointmentsForm';
 import AppointmentsList from './AppointmentsList';
@@ -92,7 +93,7 @@ function App() {
           {/* Routes for vehicle models */}
           <Route path="models">
             <Route path="list" element={<ModelsList  models={models} getModels={getModels} />} />
-            <Route path="new" element={<ManufacturerForm getManufacturers={getManufacturers} />} />
+            <Route path="new" element={<ModelsForm manufacturers={manufacturers} getModels={getModels} />} />
           </Route>
 
           {/* Routes for technicians */}
@@ -104,7 +105,7 @@ function App() {
           {/* Routes for appointments */}
           <Route path="appointments">
             <Route path="list" element={<AppointmentsList appointments={appointments} getAppointments={getAppointments} />} />
-            <Route path="new" element={<AppointmentsForm getAppointments={getAppointments} getTechnicians={getTechnicians} />} />
+            <Route path="new" element={<AppointmentsForm getAppointments={getAppointments} technicians={technicians} />} />
           </Route>
 
           {/* Route for service history */}
