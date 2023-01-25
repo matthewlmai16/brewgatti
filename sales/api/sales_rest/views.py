@@ -34,7 +34,7 @@ class CustomerEncoder(ModelEncoder):
         "name",
         "address",
         "phone_number",
-        "id"
+        "id",
     ]
 
 
@@ -45,6 +45,8 @@ class SalesRecordEncoder(ModelEncoder):
         "salesperson",
         "customer",
         "sales_price",
+        "id",
+
     ]
     encoders = {
         "automobile": AutoVOEncoder(),
@@ -192,3 +194,56 @@ def api_list_salesrecords(request):
             encoder=SalesRecordEncoder,
             safe=False,
         )
+
+
+@require_http_methods(["GET", "PUT", "DELETE"])
+def api_show_salesrecord(request, id):
+    if request.method == "GET":
+        try:
+            sales_record = SalesRecord.objects.get(id=id)
+            return JsonResponse(
+                sales_record,
+                encoder=SalesRecordEncoder,
+                safe=False
+            )
+        except SalesRecord.DoesNotExist:
+            return JsonResponse(
+                {"message": "Does not exist"},
+                status=400
+            )
+    elif request.method == "DELETE":
+        count, _ = SalesRecord.objects.get(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
+    else:
+        content = json.loads(request.body)
+        try:
+            sales_record = SalesRecord.objects.get(id=id)
+
+            automobile_href = content["automobile"]
+            automobile = AutoVO.objects.get(import_href=automobile_href)
+            content["automobile"] = automobile
+
+            customer_name = content["customer"]
+            customer = Customer.objects.get(name=customer_name)
+            content["customer"] = customer
+
+            salesperson = content["salesperson"]
+            sales_person = SalesPerson.objects.get(name=salesperson)
+            content["salesperson"] = sales_person
+
+            properties = ["salesperson", "customer",
+                          "automobile", "sales_price"]
+
+            for prop in properties:
+                setattr(sales_record, prop, content[prop])
+            sales_record.save()
+            return JsonResponse(
+                sales_record,
+                encoder=SalesRecordEncoder,
+                safe=False,
+            )
+        except SalesRecord.DoesNotExist:
+            return JsonResponse(
+                {"message": "Does not exist"},
+                status=400,
+            )
