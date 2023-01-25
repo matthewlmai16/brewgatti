@@ -1,31 +1,31 @@
 import React, {useEffect, useState} from 'react';
 
-function SalesRecordForm(props) {
+function SalesRecordForm() {
 
   /// set variables and set state
 
-  const [automobile, setAutomobile] = useState([]);
+  const [automobiles, setAutomobiles] = useState([]);
 
-  const [salesperson, setSalesPerson] = useState([]);
+  const [salespersons, setSalesPersons] = useState([]);
 
-  const [customer, setCustomer] = useState([]);
+  const [customers, setCustomers] = useState([]);
 
   const [sales_price, setSalesPrice] = useState([]);
 
 
-  const handleAutomobileChange = (event) => {
+  const handleAutomobilesChange = (event) => {
     const value = event.target.value;
-    setAutomobile(value);
+    setAutomobiles(value);
   }
 
-  const handleSalesPersonChange = (event) => {
+  const handleSalesPersonsChange = (event) => {
     const value = event.target.value;
-    setSalesPerson(value);
+    setSalesPersons(value);
   }
 
-  const handleCustomerChange = (event) => {
+  const handleCustomersChange = (event) => {
     const value = event.target.value;
-    setCustomer(value);
+    setCustomers(value);
   }
 
   const handleSalesPriceChange = (event) => {
@@ -37,9 +37,9 @@ function SalesRecordForm(props) {
     event.preventDefault();
 
     const data = {};
-    data.automobile = automobile;
-    data.salesperson = salesperson;
-    data.customer = customer;
+    data.automobiles = automobiles;
+    data.salespersons = salespersons;
+    data.customers = customers;
     data.sales_price = sales_price;
 
 
@@ -57,13 +57,66 @@ function SalesRecordForm(props) {
       const newSalesRecord = await response.json();
       console.log(newSalesRecord)
 
-      setAutomobile('');
-      setCustomer('');
-      setSalesPerson('');
+      setAutomobiles('');
+      setCustomers('');
+      setSalesPersons('');
       setSalesPrice('');
     }
 
   }
+
+///////// get our list of dropdowns
+
+const fetchSalesPersons = async () => {
+  const salespersonUrl = 'http://localhost:8090/api/salesperson/';
+
+  const response = await fetch(salespersonUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data);
+    /// look in our insomnia, when we get a list of salesperson
+    /// it returns an object where the key is sales_staff and the
+    /// value is a list of sales_staff
+    setSalesPersons(data.sales_staff);
+  }
+}
+
+const fetchCustomers = async () => {
+  const customerUrl = 'http://localhost:8090/api/customers/';
+
+  const response = await fetch(customerUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data);
+
+    setCustomers(data.customers);
+  }
+}
+
+const fetchAutomobiles = async () => {
+  const automobileUrl = 'http://localhost:8100/api/automobiles/';
+
+  const response = await fetch(automobileUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data);
+
+    setAutomobiles(data.autos);
+  }
+}
+
+
+
+////////////////// useEffect //////
+
+useEffect(() => {
+    fetchSalesPersons();
+    fetchAutomobiles();
+    fetchCustomers();
+}, []);
 
   /////////// our jsx form //////////////
 
@@ -74,9 +127,9 @@ function SalesRecordForm(props) {
             <h1>Create a sales record</h1>
             <form onSubmit={handleSubmit} id="create-sales-record-form">
                 <div className="mb-3">
-                    <select value={automobile} onChange={handleAutomobileChange} required name="automobile" className="form-select">
+                    <select value={automobiles} onChange={handleAutomobilesChange} required name="automobiles" className="form-select">
                     <option value="">Choose a Automobile</option>
-                    {props.automobiles.map(automobile => {
+                    {automobiles.map(automobile => {
                             return (
                                 <option key={automobile.import_href} value={automobile.import_href}>
                                 {automobile.vin}
@@ -86,9 +139,9 @@ function SalesRecordForm(props) {
                     </select>
                 </div>
                 <div className="mb-3">
-                    <select value={salesperson} onChange={handleSalesPersonChange} required  name="salesperson" className="form-select">
+                    <select value={salespersons} onChange={handleSalesPersonsChange} required  name="salespersons" className="form-select">
                     <option value="">Choose a Sales Person</option>
-                    {props.salesperson.map(salesperson => {
+                    {salespersons.map(salesperson => {
                             return (
                                 <option key={salesperson.id} value={salesperson.name}>
                                     {salesperson.name}
@@ -98,9 +151,9 @@ function SalesRecordForm(props) {
                     </select>
                 </div>
                 <div className="mb-3">
-                    <select value={customer} onChange={handleCustomerChange} required name="customer" className="form-select">
+                    <select value={customers} onChange={handleCustomersChange} required name="customer" className="form-select">
                     <option value="">Choose a Customer</option>
-                    {props.customers.map(customer => {
+                    {customers.map(customer => {
                             return (
                                 <option key={customer.id} value={customer.name}>
                                     {customer.name}
@@ -111,7 +164,7 @@ function SalesRecordForm(props) {
                 </div>
                 <div className="form-floating mb-3">
                     <input value={sales_price} onChange={handleSalesPriceChange} placeholder="Sales Price" required type="text" name="sales_price" id="price" className="form-control"/>
-                    <label htmlFor="sales_price">Sales Price</label>
+                    <label htmlFor="sales_price">Sales Price (Enter with $)</label>
                 </div>
             <button className="btn btn-primary">Create</button>
           </form>
