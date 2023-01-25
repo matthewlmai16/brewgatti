@@ -33,6 +33,7 @@ class Appointment(models.Model):
     vip = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
 
+
     technician_name = models.ForeignKey(
         Technician,
         related_name="appointment",

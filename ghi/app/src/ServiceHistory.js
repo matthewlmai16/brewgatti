@@ -12,11 +12,20 @@ function ServiceHistory({appointments, setAppointments}) {
     }
 
     const handleSearch = (event) => {
-        event.preventDefault();
-        const filteredAppointments = appointments.filter((appointment) =>
-            appointment.vin.includes(vinSearch)
-        );
-        setAppointments(filteredAppointments)
+        if (vinSearch.length === 0) {
+            const filteredAppointments = appointments.filter((appointment) =>
+                appointment.vin.includes(vinSearch)
+            );
+            setAppointments(filteredAppointments)
+        }
+
+        else {
+            event.preventDefault();
+            const filteredAppointments = appointments.filter((appointment) =>
+                appointment.vin.includes(vinSearch)
+            );
+            setAppointments(filteredAppointments)
+        }
     }
 
 
@@ -29,9 +38,10 @@ function ServiceHistory({appointments, setAppointments}) {
         <h1 className="text-center mb-3 mt-3">Service History</h1>
         <table className="table table-striped">
         <thead>
-          <tr>
+          <tr className="text-center">
             <th>VIN</th>
             <th>Customer name</th>
+            <th>VIP</th>
             <th>Date</th>
             <th>Time</th>
             <th>Technician</th>
@@ -43,9 +53,18 @@ function ServiceHistory({appointments, setAppointments}) {
         <tbody>
             {appointments.map(appointment => {
                 return (
-                  <tr key={appointment.id}>
+                  <tr key={appointment.id} className="text-center">
                     <td>{ appointment.vin }</td>
                     <td>{ appointment.customer_name }</td>
+                    <td>{  appointment.vip ?
+                            <img
+                                src={'https://cdn-icons-png.flaticon.com/512/6941/6941697.png'}
+                                alt=""
+                                width="25px"
+                                height="25px"
+                            />:''
+                        }
+                    </td>
                     <td>{ new Date(appointment.date_time).toLocaleDateString("en-US") }</td>
                     <td>{ new Date(appointment.date_time).toLocaleTimeString([], {
                         hour: "2-digit",
@@ -56,13 +75,13 @@ function ServiceHistory({appointments, setAppointments}) {
                     <td>{ appointment.reason }</td>
                     <td>{ appointment.finished ?
                             <img
-                                src={"✅"}
+                                src={'https://cdn-icons-png.flaticon.com/512/4315/4315445.png'}
                                 alt=""
                                 width="25px"
                                 height="25px"
                             />:
                             <img
-                                src={"🚶‍♂️"}
+                                src={'https://cdn-icons-png.flaticon.com/512/463/463575.png'}
                                 alt=""
                                 width="25px"
                                 height="25px"
