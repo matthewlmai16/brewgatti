@@ -49,9 +49,16 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/appointments/list/" element={<AppointmentsList appointments={appointments} getAppointments={getAppointments} />} />
-          <Route path="/salesperson/new/" element={<SalesPersonForm />} />
-          <Route path="/customers/new/" element={<CustomerForm />} />
-          <Route path="/salesrecords/new/" element={<SalesRecordForm/>} />
+          <Route path="salesperson">
+            <Route path="new" element={<SalesPersonForm />} />
+            <Route path="history" element={<SalesPersonHistory />} />
+          </Route>
+          <Route path="customer" >
+            <Route path="new" element={<CustomerForm />} />
+          </Route>
+          <Route path="salesrecords">
+            <Route path="new" element={<SalesRecordForm/>} />
+          </Route>
           <Route path="/appointments/new/" element={<AppointmentsForm getAppointments={getAppointments} />} />
           <Route path="/technicians/list/" element={<TechnicianList technicians={technicians} />} />
           <Route path="/technicians/new/" element={<TechnicianForm getTechnicians={getTechnicians} />} />
