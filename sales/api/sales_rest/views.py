@@ -144,22 +144,34 @@ def api_list_customer(request):
 @require_http_methods(["GET", "PUT", "DELETE"])
 def api_show_customer(request, id):
     if request.method == "GET":
-        customer = Customer.objects.get(id=id)
-        # need to pass id=id in the argument
-        return JsonResponse(
-            customer,
-            encoder=CustomerEncoder,
-            safe=False,
-        )
+        try:
+            customer = Customer.objects.get(id=id)
+            # need to pass id=id in the argument
+            return JsonResponse(
+                customer,
+                encoder=CustomerEncoder,
+                safe=False,
+            )
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "Customer does not exist"},
+                status=404
+            )
     elif request.method == "PUT":
-        content = json.loads(request.body)
-        Customer.objects.filter(id=id).update(**content)
-        customer = Customer.objects.get(id=id)
-        return JsonResponse(
-            customer,
-            encoder=Customer,
-            safe=False,
-        )
+        try:
+            content = json.loads(request.body)
+            Customer.objects.filter(id=id).update(**content)
+            customer = Customer.objects.get(id=id)
+            return JsonResponse(
+                customer,
+                encoder=Customer,
+                safe=False,
+            )
+        except:
+            return JsonResponse(
+                {"message": "Invalid Customer Input"},
+                status=400
+            )
     else:
         count, _ = Customer.objects.get(id=id).delete()
         return JsonResponse({"deleted": count > 0})
@@ -262,6 +274,6 @@ def api_show_salesrecord(request, id):
             )
         except SalesRecord.DoesNotExist:
             return JsonResponse(
-                {"message": "Sales Record does not exist"},
-                status=404,
+                {"message": "Invalid Sales Record Incorrect"},
+                status=400,
             )
