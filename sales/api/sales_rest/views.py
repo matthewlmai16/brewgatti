@@ -81,25 +81,43 @@ def api_list_salesperson(request):
 @require_http_methods(["GET", "PUT", "DELETE"])
 def api_show_salesperson(request, id):
     if request.method == "GET":
-        sales_person = SalesPerson.objects.get(id=id)
-        # need to pass id=id in the argument
-        return JsonResponse(
-            sales_person,
-            encoder=SalesPersonEncoder,
-            safe=False,
-        )
+        try:
+            sales_person = SalesPerson.objects.get(id=id)
+            # need to pass id=id in the argument
+            return JsonResponse(
+                sales_person,
+                encoder=SalesPersonEncoder,
+                safe=False,
+            )
+        except SalesPerson.DoesNotExist:
+            return JsonResponse(
+                {"message": "Sales Person Does Not Exist"},
+                status=404,
+            )
     elif request.method == "PUT":
-        content = json.loads(request.body)
-        SalesPerson.objects.filter(id=id).update(**content)
-        sales_person = SalesPerson.objects.get(id=id)
-        return JsonResponse(
-            sales_person,
-            encoder=SalesPersonEncoder,
-            safe=False,
-        )
+        try:
+            content = json.loads(request.body)
+            SalesPerson.objects.filter(id=id).update(**content)
+            sales_person = SalesPerson.objects.get(id=id)
+            return JsonResponse(
+                sales_person,
+                encoder=SalesPersonEncoder,
+                safe=False,
+            )
+        except:
+            return JsonResponse(
+                {"message": "Invalid Salesperson Input"},
+                status=400,
+            )
     else:
-        count, _ = SalesPerson.objects.get(id=id).delete()
-        return JsonResponse({"deleted": count > 0})
+        try:
+            count, _ = SalesPerson.objects.get(id=id).delete()
+            return JsonResponse({"deleted": count > 0})
+        except SalesPerson.DoesNotExist:
+            return JsonResponse(
+                {"message": "Sales Person Does Not Exist"},
+                status=404
+            )
 
 
 #########    view function for customer  ##########
@@ -208,8 +226,8 @@ def api_show_salesrecord(request, id):
             )
         except SalesRecord.DoesNotExist:
             return JsonResponse(
-                {"message": "Does not exist"},
-                status=400
+                {"message": "Sales Record does not exist"},
+                status=404
             )
     elif request.method == "DELETE":
         count, _ = SalesRecord.objects.get(id=id).delete()
@@ -244,6 +262,6 @@ def api_show_salesrecord(request, id):
             )
         except SalesRecord.DoesNotExist:
             return JsonResponse(
-                {"message": "Does not exist"},
-                status=400,
+                {"message": "Sales Record does not exist"},
+                status=404,
             )
