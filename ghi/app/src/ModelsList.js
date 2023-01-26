@@ -21,7 +21,7 @@ function ModelsList({models, getModels}) {
             <th>Manufacturer</th>
             <th>Model</th>
             <th>Picture</th>
-            <th>YADYADA</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
