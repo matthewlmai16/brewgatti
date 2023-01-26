@@ -1,27 +1,43 @@
 import './index.css';
+import React, { useState } from 'react';
+
 
 function ModelsList({models, getModels}) {
-    const deleteModel = async (model) => {
+  const [deleted, setDeleted] = useState(false);
+
+  const deleteModel = async (model) => {
         const url = `http://localhost:8100/api/models/${model.id}/`
         const fetchConfig = {
             method: 'delete',
         };
     const response = await fetch(url, fetchConfig);
     if (response.ok) {
+        setDeleted(true);
         getModels();
+    }
+    else {
+      setDeleted(false);
     }
     }
 
     return (
         <>
         <h1 className="mb-3 mt-3">Vehicle Models</h1>
+        <div>
+          <p></p>
+            {deleted?
+                <div className="alert alert-danger mb-0" id="success-message">
+                Deleted vehicle model.
+            </div>: <div></div>
+            }
+        </div>
         <table className="table table-striped">
         <thead>
           <tr>
             <th>Manufacturer</th>
             <th>Model</th>
             <th>Picture</th>
-            <th>YADYADA</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

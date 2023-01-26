@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function ModelsForm({manufacturers, getModels}) {
     const [name, setModelName] = useState('');
     const [pictureUrl, setPictureUrl] = useState('');
     const [manufacturer, setManufacturer] = useState('');
+    const [success, setSuccess] = useState(false);
+
 
 
     const handleModelNameChange = (event) => {
@@ -29,7 +31,7 @@ function ModelsForm({manufacturers, getModels}) {
         data.picture_url = pictureUrl;
         data.manufacturer_id = manufacturer;
 
-        const appointmentUrl = 'http://localhost:8100/api/models/';
+        const modelUrl = 'http://localhost:8100/api/models/';
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -38,16 +40,18 @@ function ModelsForm({manufacturers, getModels}) {
             },
         };
 
-        const response = await fetch(appointmentUrl, fetchConfig);
+        const response = await fetch(modelUrl, fetchConfig);
         if (response.ok) {
-            const newAppointment = await response.json();
-            console.log(newAppointment)
 
+            setSuccess(true);
             setModelName('');
             setPictureUrl('');
             setManufacturer('');
 
             getModels();
+        }
+        else{
+            setSuccess(false);
         }
     }
 
@@ -80,6 +84,14 @@ function ModelsForm({manufacturers, getModels}) {
                     </div>
                     <button className="btn btn-primary">Create</button>
                 </form>
+                <div>
+                <p></p>
+                {success?
+                    <div className="alert alert-success mb-0" id="success-message">
+                    Success! You created a vehicle model!
+                </div>: <div></div>
+                }
+                </div>
                 </div>
             </div>
         </div>

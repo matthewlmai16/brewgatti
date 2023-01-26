@@ -7,6 +7,7 @@ function AppointmentsForm({getAppointments, technicians}) {
     const [dateTime, setDateTime] = useState('');
     const [reason, setReason] = useState('');
     const [technician, setTechnician] = useState('');
+    const [success, setSuccess] = useState(false);
 
 
     const handleVinChange = (event) => {
@@ -53,15 +54,17 @@ function AppointmentsForm({getAppointments, technicians}) {
 
         const response = await fetch(appointmentUrl, fetchConfig);
         if (response.ok) {
-            const newAppointment = await response.json();
-            console.log(newAppointment)
 
+            setSuccess(true);
             setVin('');
             setCustomerName('');
             setDateTime('');
             setReason('');
             setTechnician('');
             getAppointments();
+        }
+        else{
+            setSuccess(false)
         }
     }
 
@@ -102,6 +105,14 @@ function AppointmentsForm({getAppointments, technicians}) {
                     </div>
                     <button className="btn btn-primary">Create</button>
                 </form>
+                <div>
+                <p></p>
+                {success?
+                    <div className="alert alert-success mb-0" id="success-message">
+                    Success! You created an appointment!
+                </div>: <div></div>
+                }
+                </div>
                 </div>
             </div>
         </div>
