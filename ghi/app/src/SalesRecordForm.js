@@ -37,21 +37,6 @@ function SalesRecordForm() {
   const [sales_price, setSalesPrice] = useState('');
 
 
-  const handleAutomobilesChange = (event) => {
-    const value = event.target.value;
-    setAutomobiles(value);
-  }
-
-  const handleSalesPersonsChange = (event) => {
-    const value = event.target.value;
-    setSalesPersons(value);
-  }
-
-  const handleCustomersChange = (event) => {
-    const value = event.target.value;
-    setCustomers(value);
-  }
-
   const handleSalesPriceChange = (event) => {
     const value = event.target.value;
     setSalesPrice(value);
