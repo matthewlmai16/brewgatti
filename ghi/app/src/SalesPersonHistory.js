@@ -86,7 +86,6 @@ useEffect(() => {
                         </tr>
                       </thead>
                       <tbody>
-                        {/* we want salesrecords.salesperson.name to equal value in line 68 */}
                         {salesrecords.filter(salesrecord => salesrecord.salesperson.name === salesperson)
                         .map(salesrecord => {
                           return (

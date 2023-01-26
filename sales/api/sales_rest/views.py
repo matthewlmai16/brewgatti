@@ -83,7 +83,6 @@ def api_show_salesperson(request, id):
     if request.method == "GET":
         try:
             sales_person = SalesPerson.objects.get(id=id)
-            # need to pass id=id in the argument
             return JsonResponse(
                 sales_person,
                 encoder=SalesPersonEncoder,
@@ -120,7 +119,7 @@ def api_show_salesperson(request, id):
             )
 
 
-#########    view function for customer  ##########
+#########  view function for customer  ##########
 @require_http_methods(["GET", "POST"])
 def api_list_customer(request):
     if request.method == "GET":
@@ -144,22 +143,33 @@ def api_list_customer(request):
 @require_http_methods(["GET", "PUT", "DELETE"])
 def api_show_customer(request, id):
     if request.method == "GET":
-        customer = Customer.objects.get(id=id)
-        # need to pass id=id in the argument
-        return JsonResponse(
-            customer,
-            encoder=CustomerEncoder,
-            safe=False,
-        )
+        try:
+            customer = Customer.objects.get(id=id)
+            return JsonResponse(
+                customer,
+                encoder=CustomerEncoder,
+                safe=False,
+            )
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "Customer does not exist"},
+                status=404
+            )
     elif request.method == "PUT":
-        content = json.loads(request.body)
-        Customer.objects.filter(id=id).update(**content)
-        customer = Customer.objects.get(id=id)
-        return JsonResponse(
-            customer,
-            encoder=Customer,
-            safe=False,
-        )
+        try:
+            content = json.loads(request.body)
+            Customer.objects.filter(id=id).update(**content)
+            customer = Customer.objects.get(id=id)
+            return JsonResponse(
+                customer,
+                encoder=Customer,
+                safe=False,
+            )
+        except:
+            return JsonResponse(
+                {"message": "Invalid Customer Input"},
+                status=400
+            )
     else:
         count, _ = Customer.objects.get(id=id).delete()
         return JsonResponse({"deleted": count > 0})
@@ -179,23 +189,16 @@ def api_list_salesrecords(request):
         content = json.loads(request.body)
 
         try:
-            # adding the key automobile_href into the content
             automobile_href = content["automobile"]
-            # automobile is a record of just the import_href of AutoVO model
             automobile = AutoVO.objects.get(import_href=automobile_href)
             if automobile.available is True:
-              # recall how to make a key, value pair in an object
                 content["automobile"] = automobile
-                # content is the body in which we pass through insomnia
 
                 salesperson = SalesPerson.objects.get(
                     name=content["salesperson"])
                 content["salesperson"] = salesperson
 
-                # we are setting a variable salesperson as a record of SalesPerson.objects.get
-                # the .objects.get(name=content["salesperson"]) is going to return our values from the SalesPerson model
                 content["salesperson"] = salesperson
-                # later when we return the json response, in line 164, we will return a list of salesperson
 
                 customer = Customer.objects.get(name=content["customer"])
                 content["customer"] = customer
@@ -262,6 +265,6 @@ def api_show_salesrecord(request, id):
             )
         except SalesRecord.DoesNotExist:
             return JsonResponse(
-                {"message": "Sales Record does not exist"},
-                status=404,
+                {"message": "Invalid Sales Record Incorrect"},
+                status=400,
             )

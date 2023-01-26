@@ -2,8 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-# create the automobile value object model here
-
 
 class AutoVO(models.Model):
     color = models.CharField(max_length=50)
@@ -15,15 +13,12 @@ class AutoVO(models.Model):
 
 class SalesPerson(models.Model):
     name = models.CharField(max_length=100)
-    # employee number is elected for charfield since it may contain letters
     employee_number = models.CharField(max_length=50, unique=True)
 
 
 class Customer(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    # there was a phonenumberfield but we needed to install that
-    # with pypi - this may be changed to reflect so in stretch goals
     phone_number = models.CharField(max_length=100)
 
 
