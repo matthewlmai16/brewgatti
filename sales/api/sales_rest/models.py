@@ -16,7 +16,7 @@ class AutoVO(models.Model):
 class SalesPerson(models.Model):
     name = models.CharField(max_length=100)
     # employee number is elected for charfield since it may contain letters
-    employee_number = models.CharField(max_length=50)
+    employee_number = models.CharField(max_length=50, unique=True)
 
 
 class Customer(models.Model):

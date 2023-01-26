@@ -31,10 +31,6 @@ const fetchSalesPersons = async () => {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data);
-    /// look in our insomnia, when we get a list of salesperson
-    /// it returns an object where the key is sales_staff and the
-    /// value is a list of sales_staff
     setSalesPersons(data.sales_staff);
   }
 }
@@ -46,7 +42,6 @@ const fetchSalesRecords = async () => {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data)
     setSalesRecords(data.sales);
   }
 
