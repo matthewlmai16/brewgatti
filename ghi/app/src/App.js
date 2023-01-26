@@ -86,7 +86,7 @@ function App() {
           {/* Routes for manufacturers */}
           <Route path="manufacturers">
             <Route path="list" element={<ManufacturersList  manufacturers={manufacturers} />} />
-            <Route path="new" element={<ManufacturerForm getManufacturers={getManufacturers} />} />
+            <Route path="new" element={<ManufacturerForm manufacturers={manufacturers} getManufacturers={getManufacturers} />} />
           </Route>
 
           {/* Routes for vehicle models */}
