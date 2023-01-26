@@ -4,11 +4,11 @@ function CustomerForm() {
 
   /// set variables and set state
 
-  const [name, setName] = useState([]);
+  const [name, setName] = useState('');
 
-  const [address, setAddress] = useState([]);
+  const [address, setAddress] = useState('');
 
-  const [phone_number, setPhoneNumber] = useState([]);
+  const [phone_number, setPhoneNumber] = useState('');
 
   const handleNameChange = (event) => {
     const value = event.target.value;

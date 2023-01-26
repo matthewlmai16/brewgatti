@@ -4,9 +4,9 @@ function SalesPersonForm() {
 
   /// set variables and set state
 
-  const [name, setName] = useState([]);
+  const [name, setName] = useState('');
 
-  const [employee_number, setEmployeeNumber] = useState([]);
+  const [employee_number, setEmployeeNumber] = useState('');
 
   const handleNameChange = (event) => {
     const value = event.target.value;

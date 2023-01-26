@@ -2,10 +2,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
 import { useEffect, useState } from 'react';
+
+import AutomobileForm from './AutomobileForm';
+import AutomobileList from './AutomobileList';
+
 import SalesPersonForm from './SalesPersonForm';
+import SalesPersonHistory from './SalesPersonHistory';
 import CustomerForm from './CustomerForm';
 import SalesRecordForm from './SalesRecordForm';
-import SalesPersonHistory from './SalesPersonHistory';
+
 import SalesList from './SalesList';
 
 import ManufacturersList from './ManufacturersList';
@@ -82,6 +87,12 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
+
+          {/* Routes for automobile */}
+          <Route path="automobile">
+            <Route path="new" element={<AutomobileForm/>} />
+            <Route path="list" element={<AutomobileList/>} />
+          </Route>
 
           {/* Routes for manufacturers */}
           <Route path="manufacturers">
