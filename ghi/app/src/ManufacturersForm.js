@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 
-function ManufacturerForm({getManufacturers}) {
+function ManufacturerForm({manufacturers, getManufacturers}) {
 
     const [name, setManufacturerName] = useState('');
-
+    const [state, setState] = useState(false);
+    const [duplicate, setDuplicate] = useState(false);
 
 
     const handleNameChange = (event) => {
         const value = event.target.value;
         setManufacturerName(value);
     }
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,13 +29,20 @@ function ManufacturerForm({getManufacturers}) {
             },
         };
 
+
         const response = await fetch(technicianUrl, fetchConfig);
         if (response.ok) {
             const newTechnician = await response.json();
             console.log(newTechnician)
 
+            setState(true);
+            setDuplicate(false);
             setManufacturerName('');
             getManufacturers();
+        }
+        else {
+            setDuplicate(true);
+            setState(false);
         }
     }
 
@@ -51,6 +60,19 @@ function ManufacturerForm({getManufacturers}) {
                     </div>
                     <button className="btn btn-primary">Create</button>
                 </form>
+                <p></p>
+                {state?
+                    <div className="alert alert-success mb-0" id="success-message">
+                    Success! You created a manufacturer!
+                </div>: <div></div>
+                }
+                <div>
+                {duplicate?
+                    <div className="alert alert-danger mb-0" id="success-message">
+                    Manufacturer already exists.
+                </div>: <div></div>
+                }
+                </div>
                 </div>
             </div>
         </div>
