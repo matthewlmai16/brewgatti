@@ -78,8 +78,6 @@ function SalesRecordForm() {
 
     const response = await fetch(salesrecordUrl, fetchConfig);
     if (response.ok) {
-      const newSalesRecord = await response.json();
-      console.log(newSalesRecord)
 
       setAutomobiles('');
       setCustomers('');

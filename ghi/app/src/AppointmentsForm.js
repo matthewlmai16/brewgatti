@@ -54,8 +54,6 @@ function AppointmentsForm({getAppointments, technicians}) {
 
         const response = await fetch(appointmentUrl, fetchConfig);
         if (response.ok) {
-            const newAppointment = await response.json();
-            console.log(newAppointment)
 
             setSuccess(true);
             setVin('');

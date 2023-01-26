@@ -42,8 +42,6 @@ function ModelsForm({manufacturers, getModels}) {
 
         const response = await fetch(modelUrl, fetchConfig);
         if (response.ok) {
-            const newModel = await response.json();
-            console.log(newModel)
 
             setSuccess(true);
             setModelName('');

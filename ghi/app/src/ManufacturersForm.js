@@ -32,8 +32,6 @@ function ManufacturerForm({manufacturers, getManufacturers}) {
 
         const response = await fetch(technicianUrl, fetchConfig);
         if (response.ok) {
-            const newTechnician = await response.json();
-            console.log(newTechnician)
 
             setState(true);
             setDuplicate(false);
