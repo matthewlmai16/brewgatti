@@ -119,7 +119,7 @@ function App() {
 
           {/* Route for salesrecords */}
           <Route path="salesrecords" >
-            <Route path="list" element={<SalesList />} />
+            <Route path="" element={<SalesList />} />
             <Route path="new" element={<SalesRecordForm/>} />
           </Route>
 
