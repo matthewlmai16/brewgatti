@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function TechnicianForm({getTechnicians}) {
 
     const [name, setTechnicianName] = useState('');
     const [employeeNumber, setEmployeeNumber] = useState('');
-
 
 
     const handleNameChange = (event) => {

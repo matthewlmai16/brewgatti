@@ -14,24 +14,15 @@ function Nav() {
             <ul className="navbar-nav">
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Manufacturers
+                  Inventory
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                   <li><NavLink className="dropdown-item" aria-current="page" to="/manufacturers/list/">List of manufacturers</NavLink></li>
-                  <li><NavLink className="dropdown-item" aria-current="page" to="/manufacturers/new/">Create manufacturer</NavLink></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div className="collapse navbar-collapse" id="navbarNavDarkDropdown">
-            <ul className="navbar-nav">
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Vehicle Models
-                </a>
-                <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                   <li><NavLink className="dropdown-item" aria-current="page" to="/models/list/">List of vehicle models</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/automobile/list/">List of automobiles</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/manufacturers/new/">Create manufacturer</NavLink></li>
                   <li><NavLink className="dropdown-item" aria-current="page" to="/models/new/">Create vehicle model</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/automobile/new/">Create automobiles</NavLink></li>
                 </ul>
               </li>
             </ul>
@@ -40,24 +31,12 @@ function Nav() {
             <ul className="navbar-nav">
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Appointments
+                  Sales
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                  <li><NavLink className="dropdown-item" aria-current="page" to="/appointments/list/">List of appointments</NavLink></li>
-                  <li><NavLink className="dropdown-item" aria-current="page" to="/appointments/new/">Create appointment</NavLink></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div className="collapse navbar-collapse" id="navbarNavDarkDropdown">
-            <ul className="navbar-nav">
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Technicians
-                </a>
-                <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                  <li><NavLink className="dropdown-item" aria-current="page" to="/technicians/list/">Our Technicians</NavLink></li>
-                  <li><NavLink className="dropdown-item" aria-current="page" to="/technicians/new/">Create Technician</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/salesrecords/">Sales Record</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/salesrecords/new/">Create sales record</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/customer/new/">Create a customer</NavLink></li>
                 </ul>
               </li>
             </ul>
@@ -69,7 +48,24 @@ function Nav() {
                   Services
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/appointments/list/">List of appointments</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/appointments/new/">Create appointment</NavLink></li>
                   <li><NavLink className="dropdown-item" aria-current="page" to="/services/history/">Service History</NavLink></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div className="collapse navbar-collapse" id="navbarNavDarkDropdown">
+            <ul className="navbar-nav">
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Employees
+                </a>
+                <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/technicians/list/">Meet our Technicians</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/salesperson/history/">Sales person History</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/technicians/new/">Create Technician</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/salesperson/new/">Create a Sales Person</NavLink></li>
                 </ul>
               </li>
             </ul>
