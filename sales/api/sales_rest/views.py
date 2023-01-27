@@ -213,22 +213,30 @@ def api_list_salesrecords(request):
         try:
             automobile_href = content["automobile"]
             automobile = AutoVO.objects.get(import_href=automobile_href)
-            # if automobile.available is True:
-            content["automobile"] = automobile
+            if automobile.available is True:
+                content["automobile"] = automobile
 
-            salesperson = SalesPerson.objects.get(
-                name=content["salesperson"])
-            content["salesperson"] = salesperson
+                salesperson = SalesPerson.objects.get(
+                    name=content["salesperson"])
+                content["salesperson"] = salesperson
 
-            customer = Customer.objects.get(name=content["customer"])
-            content["customer"] = customer
+                customer = Customer.objects.get(name=content["customer"])
+                content["customer"] = customer
 
-            salesrecord = SalesRecord.objects.create(**content)
-            return JsonResponse(
-                salesrecord,
-                encoder=SalesRecordEncoder,
-                safe=False,
-            )
+                automobile.available = False
+                automobile.save()
+
+                salesrecord = SalesRecord.objects.create(**content)
+                return JsonResponse(
+                    salesrecord,
+                    encoder=SalesRecordEncoder,
+                    safe=False,
+                )
+            else:
+                return JsonResponse(
+                    {"message": "Sorry, Automobile is not available"},
+                    status=400
+                )
 
         except:
             return JsonResponse(

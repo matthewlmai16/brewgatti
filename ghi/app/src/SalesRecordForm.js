@@ -69,6 +69,7 @@ function SalesRecordForm() {
       setCustomer('');
       setSalesPerson('');
       setSalesPrice('');
+      fetchAutomobiles();
     }
     else {
       setSuccess(false);
@@ -155,12 +156,13 @@ useEffect(() => {
                     <select value={automobile} onChange={handleAutomobileChange} required name="automobile" className="form-select">
                     <option value="">Choose a Automobile</option>
                     {automobiles.map(automobile => {
+                      if (automobile.available === true) {
                             return (
                                 <option key={automobile.vin} value={automobile.import_href}>
                                 {automobile.vin}
                                 </option>
                             );
-                        })}
+                        }})}
                     </select>
                 </div>
                 <div className="mb-3">
