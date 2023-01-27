@@ -118,9 +118,9 @@ The Sales API utilizes RESTful methods that allows users to view a list of all s
     - Allows the user to create a new instance of a customer
     - The user inputs the name of the customer, their address, and phone number
 
-**Inventory Microservice RESTful API calls:**
+## Inventory Microservice RESTful API calls:
 
-**Manufacturer**
+### Manufacturer
 | Action  | Method   | URL   |
 |---|---|---|
 | List of Manufacturers | GET  | http://localhost:8100/api/manufacturers/  |
@@ -133,6 +133,7 @@ The Sales API utilizes RESTful methods that allows users to view a list of all s
 <summary markdown="span">POST, PUT: Creating and updating a manufacturer requires only the manufacturer’s name
 </summary>
 JSON body request:
+
 ```
 {
  	"name": "Audi"
@@ -144,6 +145,7 @@ JSON body request:
 <summary markdown="span">GET, POST, PUT: The return value of creating, getting, and updating a single manufacturer is its name, href, and id
 </summary>
 Returns:
+
 ```
 {
     "href": "/api/manufacturers/1/",
@@ -157,6 +159,7 @@ Returns:
 <summary markdown="span">GET: The list of manufacturers is a dictionary with the key *manufacturers* set to a list of manufacturers.
 </summary>
 Returns:
+
 ```
 {
     "manufacturers": [
@@ -170,8 +173,9 @@ Returns:
 ```
 </details>
 
+<br></br>
 
-**Vehicle Models**
+### Vehicle Models
 
 | Action  | Method   | URL   |
 |---|---|---|
@@ -185,6 +189,7 @@ Returns:
 <summary markdown="span">POST, PUT: Creating and updating a vehicle model requires the name, picture_url and manufacturer id.
 </summary>
 JSON body request:
+
 ```
 {
     "name": "R8",
@@ -197,7 +202,8 @@ JSON body request:
 <details>
 <summary markdown="span">PUT: Updating a specific vehicle model can take the name and/or the picture_url.
 </summary>
-Returns;:
+Returns:
+
 ```
 {
     "name": "R8",
@@ -210,17 +216,18 @@ Returns;:
 <summary markdown="span">GET, POST, PUT: the detail of a specific vehicle model, or the return value from creating or updating a vehicle model, returns the model’s information and the manufacturer’s information
 </summary>
 Returns:
+
 ```
 {
-"href": "/api/models/1/",
-"id": 1,
-"name": "R8",
-"picture_url": "https://www.kindpng.com/picc/m/590-5908844_audi-r8-png-transparent-png.png",
-"manufacturer": {
-"href": "/api/manufacturers/1/",
-"id": 1,
-"name": "Audi"
-}
+    "href": "/api/models/1/",
+    "id": 1,
+    "name": "R8",
+    "picture_url": "https://www.kindpng.com/picc/m/590-5908844_audi-r8-png-transparent-png.png",
+    "manufacturer": {
+        "href": "/api/manufacturers/1/",
+        "id": 1,
+        "name": "Audi"
+    }
 }
 ```
 </details>
@@ -250,7 +257,7 @@ Returns:
 ```
 </details>
 
-**Automobiles**
+### Automobiles
 | Action  | Method   | URL   |
 |---|---|---|
 | List of Automobiles | GET  | http://localhost:8100/api/automobiles/  |
