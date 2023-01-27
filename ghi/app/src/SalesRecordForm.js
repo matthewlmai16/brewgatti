@@ -68,7 +68,15 @@ function SalesRecordForm() {
       setSalesPrice('');
     }
 
+
+
+
   }
+
+
+
+
+
 
 ///////// get our list of dropdowns
 
