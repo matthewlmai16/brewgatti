@@ -118,6 +118,234 @@ The Sales API utilizes RESTful methods that allows users to view a list of all s
     - Allows the user to create a new instance of a customer
     - The user inputs the name of the customer, their address, and phone number
 
+**Inventory Microservice RESTful API calls:**
+
+**Manufacturer**
+| Action  | Method   | URL   |
+|---|---|---|
+| List of Manufacturers | GET  | http://localhost:8100/api/manufacturers/  |
+| Show Manufacturer Details  | GET  |  http://localhost:8100/api/manufacturers/:id/  |
+| Create a Manufacturer  | POST   | http://localhost:8100/api/manufacturers/ |
+| Update a Manufacturer  | PUT | http://localhost:8100/api/manufacturers/:id/  |
+| Delete a Manufacturer  | DELETE  | http://localhost:8100/api/manufacturers/:id/  |
+
+<details>
+<summary markdown="span">POST, PUT: Creating and updating a manufacturer requires only the manufacturer’s name
+</summary>
+JSON body request:
+```
+{
+ 	"name": "Audi"
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET, POST, PUT: The return value of creating, getting, and updating a single manufacturer is its name, href, and id
+</summary>
+Returns:
+```
+{
+    "href": "/api/manufacturers/1/",
+    "id": 1,
+    "name": "Audi"
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET: The list of manufacturers is a dictionary with the key *manufacturers* set to a list of manufacturers.
+</summary>
+Returns:
+```
+{
+    "manufacturers": [
+        {
+            "href": "/api/manufacturers/1/",
+            "id": 1,
+            "name": "Audi"
+        }
+    ]
+}
+```
+</details>
+
+
+**Vehicle Models**
+
+| Action  | Method   | URL   |
+|---|---|---|
+| List of Vehicle Models | GET  | http://localhost:8100/api/models/  |
+| Show a Vehicle Model Detail  | GET  |  http://localhost:8100/api/models/:id/  |
+| Create a Vehicle Model  | POST   | http://localhost:8100/api/models/ |
+| Update a Vehicle Model  | PUT | http://localhost:8100/api/models/:id/ |
+| Delete a Vehicle Model  | DELETE  | http://localhost:8100/api/models/:id/  |
+
+<details>
+<summary markdown="span">POST, PUT: Creating and updating a vehicle model requires the name, picture_url and manufacturer id.
+</summary>
+JSON body request:
+```
+{
+    "name": "R8",
+    "picture_url": "https://www.kindpng.com/picc/m/590-5908844_audi-r8-png-transparent-png.png",
+    "manufacturer_id": 1
+}
+```
+</details>
+
+<details>
+<summary markdown="span">PUT: Updating a specific vehicle model can take the name and/or the picture_url.
+</summary>
+Returns;:
+```
+{
+    "name": "R8",
+    "picture_url": "https://www.kindpng.com/picc/m/590-5908844_audi-r8-png-transparent-png.png"
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET, POST, PUT: the detail of a specific vehicle model, or the return value from creating or updating a vehicle model, returns the model’s information and the manufacturer’s information
+</summary>
+Returns:
+```
+{
+"href": "/api/models/1/",
+"id": 1,
+"name": "R8",
+"picture_url": "https://www.kindpng.com/picc/m/590-5908844_audi-r8-png-transparent-png.png",
+"manufacturer": {
+"href": "/api/manufacturers/1/",
+"id": 1,
+"name": "Audi"
+}
+}
+```
+</details>
+
+
+<details>
+<summary markdown="span">GET: a list of vehicle models returns a list of the detail information with the key "models"
+</summary>
+Returns:
+
+```
+{
+    "models": [
+        {
+            "href": "/api/models/1/",
+            "id": 1,
+            "name": "R8",
+            "picture_url": "https://www.kindpng.com/picc/m/590-5908844_audi-r8-png-transparent-png.png",
+            "manufacturer": {
+                "href": "/api/manufacturers/1/",
+                "id": 1,
+                "name": "Audi"
+            }
+        }
+    ]
+}
+```
+</details>
+
+**Automobiles**
+| Action  | Method   | URL   |
+|---|---|---|
+| List of Automobiles | GET  | http://localhost:8100/api/automobiles/  |
+| Show an Automobile Detail  | GET  |  http://localhost:8100/api/automobiles/:vin/  |
+| Create an Automobile  | POST   | http://localhost:8100/api/automobiles/ |
+| Update an Automobile l  | PUT | http://localhost:8100/api/automobiles/:vin/ |
+| Delete an Automobile   | DELETE  | http://localhost:8100/api/automobiles/:vin/  |
+
+<details>
+<summary markdown="span">POST: You can create an automobile with its color, year, VIN, and the id of the vehicle model.
+</summary>
+JSON body request:
+
+```
+{
+    "color": "black",
+    "year": 2022,
+    "vin": "1C3CC5FB2AN120174",
+    "model_id": 1
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET: As noted, you query an automobile by its VIN. For example, you would use the URL
+http://localhost:8100/api/automobiles/1C3CC5FB2AN120174/
+to get the details for the car with the VIN "1C3CC5FB2AN120174". The details for an automobile include its model and manufacturer.
+</summary>
+Returns:
+
+```
+{
+    "href": "/api/automobiles/1C3CC5FB2AN120174/",
+    "id": 1,
+    "color": "black",
+    "year": 2022,
+    "vin": "1C3CC5FB2AN120174",
+    "model": {
+        "href": "/api/models/1/",
+        "id": 1,
+        "name": "R8",
+        "picture_url": "https://www.kindpng.com/picc/m/590-5908844_audi-r8-png-transparent-png.png",
+        "manufacturer": {
+            "href": "/api/manufacturers/1/",
+            "id": 1,
+            "name": "Audi"
+        }
+    }
+}
+```
+</details>
+
+<details>
+<summary markdown="span">PUT: You can update the color and/or year of an automobile.
+</summary>
+JSON body request:
+
+```
+{
+    "color": "white",
+    "year": 2021
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET: a list of automobiles returns a dictionary with the key "autos" set to a list of automobile information
+</summary>
+Returns:
+
+```
+{
+    "autos": [
+        {
+            "href": "/api/automobiles/1C3CC5FB2AN120174/",
+            "id": 1,
+            "color": "black",
+            "year": 2022,
+            "vin": "1C3CC5FB2AN120174",
+            "model": {
+                "href": "/api/models/1/",
+                "id": 1,
+                "name": "R8",
+                "picture_url": "https://www.kindpng.com/picc/m/590-5908844_audi-r8-png-transparent-png.png",
+                "manufacturer": {
+                    "href": "/api/manufacturers/1/",
+                    "id": 1,
+                    "name": "Audi"
+                }
+            }
+        }
+    ]
+}
+```
+</details>
 
 
 ## Service microservice
