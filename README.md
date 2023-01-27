@@ -60,33 +60,46 @@ To navigate the server, type ```http://localhost:3000``` , this will take you to
 The Inventory API utilized RESTful methods that allows users to view a list of all manufacturers, create a new manufacturer, view all of the vehicle models, create a new vehicle model, list all of the automobiles, and create new automobiles.
 
 **List manufacturers**
+
 [http://localhost:3000/manufacturers/list/](link){:target="_blank"}
-List view of all the manufacturers inside the database
+
+- List view of all the manufacturers inside the database
 
 **Create manufacturer**
+
 [http://localhost:3000/manufacturers/new/](link){:target="_blank"}
-Allows the user to create a new instance of a manufacturer
-The user inputs a manufacturer name that does not yet exist inside of the database
+
+- Allows the user to create a new instance of a manufacturer
+- The user inputs a manufacturer name that does not yet exist inside of the database
 
 **List vehicle models**
+
 [http://localhost:3000/models/list/](link){:target="_blank"}
-List view of all vehicle models in the database
-Delete a vehicle model instance from the database
+
+- List view of all vehicle models in the database
+- Delete a vehicle model instance from the database
 
 **Create vehicle models**
+
 [http://localhost:3000/models/new/](link){:target="_blank"}
-Allows the user to create a new instance of a vehicle model
-The user inputs a model name, a picture url of the vehicle, and selects a manufacturer from a dropdown
+
+- Allows the user to create a new instance of a vehicle model
+- The user inputs a model name, a picture url of the vehicle, and selects a manufacturer from a dropdown
 
 **List of automobiles**
+
 [http://localhost:3000/automobile/list/](link){:target="_blank"}
-List view of all automobiles inside of the database
-Displayed on this list is the VIN, color, year, model, and manufacturer of the vehicle
+
+- List view of all automobiles inside of the database
+- Displayed on this list is the VIN, color, year, model, and manufacturer of the vehicle
 
 **Create an automobile**
+
 [http://localhost:3000/models/new/](link){:target="_blank"}
-Allows the user to create a new instance of an automobile
-The user inputs a color, year, VIN, and selects a model from a dropdown
+
+- Allows the user to create a new instance of an automobile
+- The user inputs a color, year, VIN, and selects a model from a dropdown
+
 
 ## Service microservice
 
