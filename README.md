@@ -48,6 +48,7 @@ After running the commands above, type and press enter after each command listed
 
 ![Successful Docker containers](successful-docker.png)
 </details>
+{: .alert .alert-info}
 
 ## Service microservice
 
