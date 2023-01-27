@@ -35,11 +35,11 @@ Please have Docker Desktop downloaded before continuing with the following direc
 
 After running the commands above, type and press enter after each command listed below:
 
-    1. ```docker volume create beta-data```
+1. ```docker volume create beta-data```
 
-    2. ```docker-compose build```
+2. ```docker-compose build```
 
-    3. ```docker-compose up```
+3. ```docker-compose up```
 
 
 
