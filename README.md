@@ -73,7 +73,7 @@ The Inventory API utilizes RESTful methods that allows users to view a list of a
 - **List of automobiles** http://localhost:3000/automobile/list/
     - List view of all automobiles inside of the database
     - Displayed on this list is the VIN, color, year, model, and manufacturer of the vehicle
-- **Create an automobile** http://localhost:3000/models/new/
+- **Create an automobile** http://localhost:3000/automobile/new/
     - Allows the user to create a new instance of an automobile
     - The user inputs a color, year, VIN, and selects a model from a dropdown
 
