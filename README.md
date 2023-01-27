@@ -19,7 +19,7 @@ The service microservice manages the technicians, scheduling of appointments, vi
 
 ## CarCar Application Diagram
 
-![CarCar Application Diagram](project_beta_diagram.png)
+![CarCar Application Diagram](project-beta-diagram.png)
 
 ## Getting Started
 
