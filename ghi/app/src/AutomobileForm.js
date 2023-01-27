@@ -6,6 +6,8 @@ function AutomobileForm() {
   const [year, setYear] = useState('');
   const [vin, setVin ] = useState('');
   const [model, setModel] = useState('');
+  const [success, setSuccess] = useState(false);
+
 
 
   const handleColorChange = (event) => {
@@ -51,10 +53,14 @@ function AutomobileForm() {
       const response = await fetch(automobileUrl, fetchConfig);
       if (response.ok) {
 
+          setSuccess(true);
           setColor('');
           setYear('');
           setVin('');
           setModel('');
+      }
+      else{
+        setSuccess(false);
       }
   }
 
@@ -116,6 +122,14 @@ useEffect(() => {
                 </div>
                   <button className="btn btn-primary">Create</button>
               </form>
+              <div>
+                <p></p>
+                    {success?
+                    <div className="alert alert-success mb-0" id="success-message">
+                    Success! You created an automobile!
+                    </div>: <div></div>
+                }
+                </div>
               </div>
           </div>
       </div>

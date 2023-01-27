@@ -183,7 +183,7 @@ useEffect(() => {
                 </div>
                 <div className="form-floating mb-3">
                     <input value={sales_price} onChange={handleSalesPriceChange} placeholder="Sales Price" required type="text" name="sales_price" id="price" className="form-control"/>
-                    <label htmlFor="sales_price">Sales Price (Enter with $)</label>
+                    <label htmlFor="sales_price">Sales Price</label>
                 </div>
             <button className="btn btn-primary">Create</button>
           </form>
