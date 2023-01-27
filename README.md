@@ -53,27 +53,27 @@ After running the commands above, type and press enter after each command listed
 
 To navigate the server, type ```http://localhost:3000``` , this will take you to our Home Page. Within the Home Page is a navigation bar for easy access to each feature that we created. Below is a complete breakdown of the urls for each feature of the application.
 
-## API Overview
+## API Outline
 
 ### Inventory API
 
-The Inventory API utilized RESTful methods that allows users to view a list of all manufacturers, create a new manufacturer, view all of the vehicle models, create a new vehicle model, list all of the automobiles, and create new automobiles.
+The Inventory API utilizes RESTful methods that allows users to view a list of all manufacturers, create a new manufacturer, view all of the vehicle models, create a new vehicle model, list all of the automobiles, and create new automobiles.
 
-- **List manufacturers** [http://localhost:3000/manufacturers/list/](link)
+- **List manufacturers** http://localhost:3000/manufacturers/list/
     -  List view of all the manufacturers inside the database
-- **Create manufacturer** [http://localhost:3000/manufacturers/new/](link)
+- **Create manufacturer** http://localhost:3000/manufacturers/new/
     - Allows the user to create a new instance of a manufacturer
     - The user inputs a manufacturer name that does not yet exist inside of the database
-- **List vehicle models** [http://localhost:3000/models/list/](link)
+- **List vehicle models** http://localhost:3000/models/list/
     - List view of all vehicle models in the database
     - Delete a vehicle model instance from the database
-- **Create vehicle models** [http://localhost:3000/models/new/](link)
+- **Create vehicle models** http://localhost:3000/models/new/
     - Allows the user to create a new instance of a vehicle model
     - The user inputs a model name, a picture url of the vehicle, and selects a manufacturer from a dropdown
-- **List of automobiles** [http://localhost:3000/automobile/list/](link)
+- **List of automobiles** http://localhost:3000/automobile/list/
     - List view of all automobiles inside of the database
     - Displayed on this list is the VIN, color, year, model, and manufacturer of the vehicle
-- **Create an automobile** [http://localhost:3000/models/new/](link)
+- **Create an automobile** http://localhost:3000/models/new/
     - Allows the user to create a new instance of an automobile
     - The user inputs a color, year, VIN, and selects a model from a dropdown
 
