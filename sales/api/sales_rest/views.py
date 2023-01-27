@@ -184,10 +184,10 @@ def api_show_customer(request, id):
             customer = Customer.objects.get(id=id)
             return JsonResponse(
                 customer,
-                encoder=Customer,
+                encoder=CustomerEncoder,
                 safe=False,
             )
-        except:
+        except Customer.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid Customer Input"},
                 status=400
