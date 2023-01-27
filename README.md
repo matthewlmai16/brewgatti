@@ -43,14 +43,11 @@ After running the commands above, type and press enter after each command listed
 
 3. ```docker-compose up```
 
-<div class="panel panel-info">
-{: .panel-heading}
 <details>
   <summary markdown="span">After successfully following the steps outlined above, you should see all 7 containers running.</summary>
 
 ![Successful Docker containers](successful-docker.png)
 </details>
-</div>
 
 ## Service microservice
 
