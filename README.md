@@ -25,13 +25,15 @@ The service microservice manages the technicians, scheduling of appointments, vi
 
 Please have Docker Desktop downloaded before continuing with the following directions listed below.
 
-### Cloning the Repository
+#### Cloning the Repository
 
 1. Inside your terminal, change to a directory that you would like to clone this project into.
+
 2. In your terminal, type: ```git clone https://gitlab.com/matthewlmai/project-beta.git```
+
 3. Switch into the project directory: ```cd project-beta```
 
-### Firing up Docker
+#### Firing up Docker
 
 After running the commands above, type and press enter after each command listed below:
 
@@ -41,6 +43,7 @@ After running the commands above, type and press enter after each command listed
 
 3. ```docker-compose up```
 
+![Successful Docker containers](successful-docker.png)
 
 
 ## Service microservice
