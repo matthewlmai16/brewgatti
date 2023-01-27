@@ -10,10 +10,6 @@ class AutoVO(models.Model):
     available = models.BooleanField(default=True)
     import_href = models.CharField(max_length=100, unique=True, null=True)
 
-    # def auto_sold(self):
-    #     self.available = False
-    #     self.save()
-
 
 class SalesPerson(models.Model):
     name = models.CharField(max_length=100)
