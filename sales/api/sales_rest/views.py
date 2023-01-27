@@ -67,6 +67,18 @@ def api_list_autoVO(request):
         )
 
 
+@require_http_methods(["PUT"])
+def sold_auto(request, id):
+    if request.method == "PUT":
+        auto = AutoVO.objects.get(id=id)
+        auto.auto_sold
+        return JsonResponse(
+            auto,
+            encoder=AutoVOEncoder,
+            safe=False,
+        )
+
+
 ############ view function to show all the salesperson#######
 @require_http_methods(["GET", "POST"])
 def api_list_salesperson(request):
