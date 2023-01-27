@@ -77,6 +77,48 @@ The Inventory API utilizes RESTful methods that allows users to view a list of a
     - Allows the user to create a new instance of an automobile
     - The user inputs a color, year, VIN, and selects a model from a dropdown
 
+### Service API
+
+The Service API utilizes RESTful methods that allows users to view a list of appointments that are incomplete (in-progress), create an appointment, a view of all technicians, creating an instance of a technician, and a service history that details all appointment (in-progress and completed)
+
+- **List of appointments** http://localhost:3000/appointments/list/
+    -  List view of all appointments that have not yet been completed inside the database
+    -  List view of in-progress appointments display the VIN, customer name, date, time, technician, and reason for appointment.
+    -  The user also has the ability to cancel or complete an appointment
+- **Create an appointment** http://localhost:3000/appointments/new/
+    - Allows the user to create a new instance of an appointment
+    - The user inputs the VIN, customer name, the date and time of the scheduled appointment, reason for service, and selects a technician from a dropdown
+- **List of technicians** http://localhost:3000/technicians/list/
+    - List view of all technicians in the database
+    - The list view displays the technician name and their respective employee number
+- **Create a technician** http://localhost:3000/technicians/new/
+    - Allows the user to create a new instance of a technician
+    - The user inputs a technician name and an employee number
+- **Service history** http://localhost:3000/services/history/
+    - List view of a history of all of the service appointments inside of the database (in-progress appointments and completed appointments)
+    - The service history has a search feature where a user is able to filter appointments by the VIN. The list view details the VIN, customer name, VIP status, date, time, technician, reason for service, and the current status of the appointment.
+
+### Sales API
+
+The Sales API utilizes RESTful methods that allows users to view a list of all sales, a list view of a salesperson’s sales record history, create a sales record, create an instance of a salesperson, and create new customers.
+
+- **List of sales record** http://localhost:3000/salesrecords/
+    -  List view of all sales records in the database
+    -  List view of sales record display the sales person, their employee number, their customer, the VIN, and sales price
+- **Salesperson history** http://localhost:3000/salesperson/history/
+    - The user selects from a dropdown the salesperson they want to see the sales history for
+    - This view shows a sales record for a specific salesperson in the database
+- **Create a sales record** http://localhost:3000/salesrecords/new/
+    - Allows the user to create a new instance of a sales record
+    - The user selects an automobile, salesperson, and a customer form a dropdown and inputs the salesprice of the sale
+- **Create a new salesperson** http://localhost:3000/salesperson/new/
+    - Allows the user to create a new instance of a salesperson
+    - The user inputs a salesperson name and their employee number
+- **Create a new customer** http://localhost:3000/customer/new/
+    - Allows the user to create a new instance of a customer
+    - The user inputs the name of the customer, their address, and phone number
+
+
 
 ## Service microservice
 
