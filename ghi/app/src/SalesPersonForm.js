@@ -8,6 +8,8 @@ function SalesPersonForm() {
 
   const [employee_number, setEmployeeNumber] = useState('');
 
+  const [success, setSuccess] = useState(false);
+
   const handleNameChange = (event) => {
     const value = event.target.value;
     setName(value);
@@ -38,8 +40,12 @@ function SalesPersonForm() {
     const response = await fetch(salesPersonUrl, fetchConfig);
     if (response.ok) {
 
+      setSuccess(true);
       setName('');
       setEmployeeNumber('');
+    }
+    else{
+      setSuccess(false);
     }
 
   }
@@ -62,6 +68,14 @@ function SalesPersonForm() {
                 </div>
                 <button className="btn btn-primary">Create</button>
             </form>
+            <div>
+                <p></p>
+                {success?
+                    <div className="alert alert-success mb-0" id="success-message">
+                    Success! You created a new salesperson!
+                </div>: <div></div>
+                }
+                </div>
             </div>
         </div>
     </div>

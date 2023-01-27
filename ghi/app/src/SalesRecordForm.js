@@ -10,6 +10,8 @@ function SalesRecordForm() {
 
   const [sales_price, setSalesPrice] = useState('');
 
+  const [success, setSuccess] = useState(false);
+
 
   const handleAutomobileChange = (event) => {
     const value = event.target.value;
@@ -62,10 +64,14 @@ function SalesRecordForm() {
 
       const data = await response.json();
 
+      setSuccess(true);
       setAutomobile('');
       setCustomer('');
       setSalesPerson('');
       setSalesPrice('');
+    }
+    else {
+      setSuccess(false);
     }
 
   }
@@ -179,6 +185,14 @@ useEffect(() => {
                 </div>
             <button className="btn btn-primary">Create</button>
           </form>
+          <div>
+            <p></p>
+            {success?
+                <div className="alert alert-success mb-0" id="success-message">
+                Success! You created a new sales record!
+            </div>: <div></div>
+            }
+          </div>
         </div>
     </div>
 </div>

@@ -94,7 +94,6 @@ useEffect(() => {
                                 <td>{salesrecord.customer.name}</td>
                                 <td>{salesrecord.automobile.vin}</td>
                                 <td>${salesrecord.sales_price}</td>
-
                             </tr>
                           );
                         })}
