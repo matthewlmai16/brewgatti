@@ -173,8 +173,6 @@ Returns:
 ```
 </details>
 
-<br></br>
-
 ### Vehicle Models
 
 | Action  | Method   | URL   |
