@@ -122,8 +122,196 @@ The Sales API utilizes RESTful methods that allows users to view a list of all s
 
 ## Service microservice
 
-Explain your models and integration with the inventory
-microservice, here.
+The Service microservice has three models: AutomobileVO, Technician, and Appointment. The AutomobileVO model is a value object which is a representation of the Automobile model in the ***Inventory microservice***. Through the use of a polling mechanism, we are able to poll data from the Automobile model in the Inventory microservice into the AutomobileVO in the Service microservice.
+
+The ```AutomobileVO``` model contains the ```vin``` and ```import_href``` fields. This model is a value object that consistently polls for data from the Automobile model in the Inventory microservice.
+
+The ```Technician``` model contains the ```technician_name``` and ```employee_number``` fields. This model is a source of information that stores data about technicians.
+
+The ```Appointment``` model contains the ```vin```, ```customer_name```, ```date_time```, ```reason```, ```vip```, ```finished```, and ```technician_name``` fields. This model is a source of information that stores data about appointments. The ```vin``` field stores the VIN number of the associated vehicle. The ```vin``` field is not set as a foreign key because clients who do not own a vehicle from the inventory should also be able to make an appointment for services. The ```technician_name``` field is a foreign key to the ```Technician``` model - many appointments can have a single technician. The ```vip``` and ```finished``` fields are used to check for their status.
+
+**Service Microservice RESTful API calls:**
+| Action  | Method   | URL   |
+|:---:|:---:|:---:|
+| List of technicians| GET  | http://localhost:8080/api/technicians/  |
+| Create new technicians  | POST  |  http://localhost:8080/api/technicians/  |
+
+<details>
+  <summary markdown="span">GET: List of technicians</summary>
+Returns:
+
+```
+{
+    "technicians": [
+        {
+            "technician_name": "Joshua Elder",
+            "employee_number": 111222,
+            "id": 1
+        },
+    ]
+}
+```
+
+</details>
+
+<details>
+  <summary markdown="span">POST: Creating a new technician request</summary>
+JSON body request:
+
+```
+{
+	"technician_name": "Joshua Elder",
+	"employee_number": "111222"
+}
+```
+
+Returns:
+
+```
+{
+	"technician_name": "Joshua Elder",
+	"employee_number": "111222,"
+	"id": 1
+}
+```
+</details>
+
+| Action  | Method   | URL   |
+|:---:|:---:|:---:|
+| List of appointments  | GET   | http://localhost:8080/api/appointments/ |
+| Create new appointments | POST | http://localhost:8080/api/appointments/   |
+| Show appointment details  | GET  | http://localhost:8080/api/appointments/:id/  |
+| Edit a specific appointment | PUT  | http://localhost:8080/api/appointments/:id/ |
+| Delete a specific appointment | DELETE  | http://localhost:8080/api/appointments/:id/ |
+
+<details>
+  <summary markdown="span">GET: List of appointments</summary>
+Returns:
+
+```
+{
+    "appointments": [
+        {
+            "vin": "1E3EC5FB2AN120176",
+            "customer_name": "John Doe",
+            "date_time": "2023-01-24T09:21:32.096450+00:00",
+            "reason": "Tire replacement for left/right rear tires",
+            "vip": true,
+            "finished": false,
+            "technician_name": {
+                "technician_name": "Joshua Elder",
+                "employee_number": 111222,
+                "id": 1
+            },
+            "id": 1
+        },
+    ]
+}
+```
+</details>
+
+<details>
+  <summary markdown="span">POST: Creating a new appointment request</summary>
+JSON body request:
+
+```
+{
+    "vin": "1C3CC5FB2AN120174",
+    "customer_name": "John Doe",
+    "date_time": "2023-01-24T09:21:32.096450+00:00",
+    "reason": "Tire replacement for left/right rear tires",
+    "technician_name": "Joshua Elder"
+}
+```
+
+Returns:
+
+```
+{
+	"vin": "1C3CC5FB2AN120174",
+	"customer_name": "John Doe",
+	"date_time": "2023-01-24T09:21:32.096450+00:00",
+	"reason": "Tire replacement for left/right rear tires",
+	"vip": true,
+	"finished": false,
+	"technician_name": {
+		"technician_name": "Joshua Elder",
+		"employee_number": 111222,
+		"id": 1
+	},
+	"id": 1
+}
+```
+</details>
+
+<details>
+  <summary markdown="span">GET: Show a specific appointment</summary>
+Returns:
+
+```
+{
+	"vin": "1C3CC5FB2AN120174",
+	"customer_name": "John Doe",
+	"date_time": "2023-01-24T09:21:32.096450+00:00",
+	"reason": "Tire replacement for left/right rear tires",
+	"vip": true,
+	"finished": false,
+	"technician_name": {
+		"technician_name": "Joshua Elder",
+		"employee_number": 111222,
+		"id": 1
+	},
+	"id": 1
+}
+```
+</details>
+
+</details>
+
+<details>
+  <summary markdown="span">PUT: Edit a specific appointment</summary>
+JSON body request:
+
+```
+{
+    "vin": "1C3CC5FB2AN120174",
+    "customer_name": "John Doe",
+    "date_time": "2023-01-24T09:21:32.096450+00:00",
+    "reason": "Tire replacement for all tires",
+    "technician_name": "Joshua Elder"
+}
+```
+
+Returns:
+```
+{
+	"vin": "1C3CC5FB2AN120174",
+	"customer_name": "John Doe",
+	"date_time": "2023-01-24T09:21:32.096450+00:00",
+	"reason": "Tire replacement for all tires",
+	"vip": true,
+	"finished": false,
+	"technician_name": {
+		"technician_name": "Joshua Elder",
+		"employee_number": 111222,
+		"id": 1
+	},
+	"id": 1
+}
+```
+</details>
+
+<details>
+  <summary markdown="span">DELETE: Delete a specific appointment</summary>
+Returns:
+
+```
+{
+	"deleted": true
+}
+```
+</details>
+
 
 ## Sales microservice
 
