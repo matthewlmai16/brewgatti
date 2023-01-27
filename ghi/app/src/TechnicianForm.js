@@ -4,6 +4,7 @@ function TechnicianForm({getTechnicians}) {
 
     const [name, setTechnicianName] = useState('');
     const [employeeNumber, setEmployeeNumber] = useState('');
+    const [success, setSuccess] = useState(false);
 
 
     const handleNameChange = (event) => {
@@ -35,9 +36,13 @@ function TechnicianForm({getTechnicians}) {
         const response = await fetch(technicianUrl, fetchConfig);
         if (response.ok) {
 
+            setSuccess(true);
             setTechnicianName('');
             setEmployeeNumber('');
             getTechnicians();
+        }
+        else{
+            setSuccess(false);
         }
     }
 
@@ -59,6 +64,14 @@ function TechnicianForm({getTechnicians}) {
                     </div>
                     <button className="btn btn-primary">Create</button>
                 </form>
+                <div>
+                <p></p>
+                    {success?
+                    <div className="alert alert-success mb-0" id="success-message">
+                    Success! You created a technician!
+                    </div>: <div></div>
+                }
+                </div>
                 </div>
             </div>
         </div>

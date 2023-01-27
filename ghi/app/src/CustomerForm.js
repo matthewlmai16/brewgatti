@@ -10,6 +10,8 @@ function CustomerForm() {
 
   const [phone_number, setPhoneNumber] = useState('');
 
+  const [success, setSuccess] = useState(false);
+
   const handleNameChange = (event) => {
     const value = event.target.value;
     setName(value);
@@ -46,9 +48,13 @@ function CustomerForm() {
     const response = await fetch(customerUrl, fetchConfig);
     if (response.ok) {
 
+      setSuccess(true);
       setName('');
       setAddress('');
       setPhoneNumber('');
+    }
+    else{
+      setSuccess(false);
     }
 
   }
@@ -76,6 +82,14 @@ function CustomerForm() {
 
                 <button className="btn btn-primary">Create</button>
             </form>
+            <div>
+                <p></p>
+                    {success?
+                    <div className="alert alert-success mb-0" id="success-message">
+                    Success! You created a new customer!
+                    </div>: <div></div>
+                }
+                </div>
             </div>
         </div>
     </div>

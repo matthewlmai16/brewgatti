@@ -35,8 +35,10 @@ function Nav() {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                   <li><NavLink className="dropdown-item" aria-current="page" to="/salesrecords/">Sales Record</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/salesperson/history/">Sales person History</NavLink></li>
                   <li><NavLink className="dropdown-item" aria-current="page" to="/salesrecords/new/">Create sales record</NavLink></li>
-                  <li><NavLink className="dropdown-item" aria-current="page" to="/customer/new/">Create NavLink customer</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/salesperson/new/">Create a sales person</NavLink></li>
+                  <li><NavLink className="dropdown-item" aria-current="page" to="/customer/new/">Create a new customer</NavLink></li>
                 </ul>
               </li>
             </ul>
@@ -63,9 +65,7 @@ function Nav() {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                   <li><NavLink className="dropdown-item" aria-current="page" to="/technicians/list/">Meet our Technicians</NavLink></li>
-                  <li><NavLink className="dropdown-item" aria-current="page" to="/salesperson/history/">Sales person History</NavLink></li>
                   <li><NavLink className="dropdown-item" aria-current="page" to="/technicians/new/">Create Technician</NavLink></li>
-                  <li><NavLink className="dropdown-item" aria-current="page" to="/salesperson/new/">Create a Sales Person</NavLink></li>
                 </ul>
               </li>
             </ul>
