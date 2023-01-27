@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 
 function AutomobileForm() {
 
@@ -37,7 +37,7 @@ function AutomobileForm() {
       data.color = color;
       data.year = year;
       data.vin = vin;
-      data.model = model
+      data.model_id = model
 
       const automobileUrl = 'http://localhost:8100/api/automobiles/';
       const fetchConfig = {
@@ -58,6 +58,30 @@ function AutomobileForm() {
       }
   }
 
+  /////////get list of models //////
+
+  const [models, setModels] = useState([]);
+
+
+  const fetchModels = async () => {
+    const modelUrl = 'http://localhost:8100/api/models/';
+
+    const response = await fetch(modelUrl);
+
+    if (response.ok) {
+      const data = await response.json();
+
+      setModels(data.models);
+    }
+  }
+
+
+////////////////use effect///////
+useEffect(() => {
+  fetchModels();
+}, []);
+
+  /////////jsx///////////////////
 
 
   return (
@@ -78,10 +102,18 @@ function AutomobileForm() {
                       <input onChange={handleVinChange} placeholder="VIN" required type="text" name = "vin" id="vin" className="form-control" value={vin}/>
                       <label htmlFor="vin">VIN</label>
                   </div>
-                  <div className="form-floating mb-3">
-                      <input onChange={handleModelChange} placeholder="Model" required type="text" name = "model" id="model" className="form-control" value={model}/>
-                      <label htmlFor="color">Model</label>
-                  </div>
+                  <div className="mb-3">
+                    <select value={model} onChange={handleModelChange} required  name="models" className="form-select">
+                    <option value="">Choose a Model</option>
+                    {models.map(model => {
+                            return (
+                                <option key={model.id} value={model.id}>
+                                    {model.name}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>
                   <button className="btn btn-primary">Create</button>
               </form>
               </div>

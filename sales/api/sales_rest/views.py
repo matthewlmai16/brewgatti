@@ -57,6 +57,16 @@ class SalesRecordEncoder(ModelEncoder):
 ####### Create your views here ########
 
 
+@require_http_methods(["GET"])
+def api_list_autoVO(request):
+    if request.method == "GET":
+        autos = AutoVO.objects.all()
+        return JsonResponse(
+            {"autos": autos},
+            encoder=AutoVOEncoder,
+        )
+
+
 ############ view function to show all the salesperson#######
 @require_http_methods(["GET", "POST"])
 def api_list_salesperson(request):
@@ -191,30 +201,28 @@ def api_list_salesrecords(request):
         try:
             automobile_href = content["automobile"]
             automobile = AutoVO.objects.get(import_href=automobile_href)
-            if automobile.available is True:
-                content["automobile"] = automobile
+            # if automobile.available is True:
+            content["automobile"] = automobile
 
-                salesperson = SalesPerson.objects.get(
-                    name=content["salesperson"])
-                content["salesperson"] = salesperson
+            salesperson = SalesPerson.objects.get(
+                name=content["salesperson"])
+            content["salesperson"] = salesperson
 
-                content["salesperson"] = salesperson
+            customer = Customer.objects.get(name=content["customer"])
+            content["customer"] = customer
 
-                customer = Customer.objects.get(name=content["customer"])
-                content["customer"] = customer
+            salesrecord = SalesRecord.objects.create(**content)
+            return JsonResponse(
+                salesrecord,
+                encoder=SalesRecordEncoder,
+                safe=False,
+            )
 
-                salesrecord = SalesRecord.objects.create(**content)
-        except AutoVO.DoesNotExist:
+        except:
             return JsonResponse(
                 {"message": "Invalid Automobile"},
                 status=400
             )
-
-        return JsonResponse(
-            salesrecord,
-            encoder=SalesRecordEncoder,
-            safe=False,
-        )
 
 
 @require_http_methods(["GET", "PUT", "DELETE"])

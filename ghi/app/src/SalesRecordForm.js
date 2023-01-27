@@ -8,6 +8,8 @@ function SalesRecordForm() {
 
   const [customer, setCustomer] = useState('');
 
+  const [sales_price, setSalesPrice] = useState('');
+
 
   const handleAutomobileChange = (event) => {
     const value = event.target.value;
@@ -25,30 +27,23 @@ function SalesRecordForm() {
   }
 
 
-  /// set variables and set state for array
-
-
-  const [automobiles, setAutomobiles] = useState([]);
-
-  const [salespersons, setSalesPersons] = useState([]);
-
-  const [customers, setCustomers] = useState([]);
-
-  const [sales_price, setSalesPrice] = useState('');
-
-
   const handleSalesPriceChange = (event) => {
     const value = event.target.value;
     setSalesPrice(value);
   }
 
+
+  /// set variables and set state for array
+
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = {};
-    data.automobiles = automobiles;
-    data.salespersons = salespersons;
-    data.customers = customers;
+    data.automobile = automobile;
+    data.salesperson = salesperson;
+    data.customer = customer;
     data.sales_price = sales_price;
 
 
@@ -63,16 +58,41 @@ function SalesRecordForm() {
 
     const response = await fetch(salesrecordUrl, fetchConfig);
     if (response.ok) {
+      console.log(response)
 
-      setAutomobiles('');
-      setCustomers('');
-      setSalesPersons('');
+      const data = await response.json();
+
+      setAutomobile('');
+      setCustomer('');
+      setSalesPerson('');
       setSalesPrice('');
     }
 
   }
 
 ///////// get our list of dropdowns
+
+
+const [automobiles, setAutomobiles] = useState([]);
+
+const [salespersons, setSalesPersons] = useState([]);
+
+const [customers, setCustomers] = useState([]);
+
+
+const fetchAutomobiles = async () => {
+  const automobileUrl = 'http://localhost:8090/api/automobiles/';
+
+  const response = await fetch(automobileUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+
+
+    setAutomobiles(data.autos);
+  }
+}
+
 
 const fetchSalesPersons = async () => {
   const salespersonUrl = 'http://localhost:8090/api/salesperson/';
@@ -98,18 +118,6 @@ const fetchCustomers = async () => {
   }
 }
 
-const fetchAutomobiles = async () => {
-  const automobileUrl = 'http://localhost:8100/api/automobiles/';
-
-  const response = await fetch(automobileUrl);
-
-  if (response.ok) {
-    const data = await response.json();
-
-
-    setAutomobiles(data.autos);
-  }
-}
 
 
 
@@ -130,11 +138,11 @@ useEffect(() => {
             <h1>Create a sales record</h1>
             <form onSubmit={handleSubmit} id="create-sales-record-form">
                 <div className="mb-3">
-                    <select value={automobile} onChange={handleAutomobileChange} required name="automobiles" className="form-select">
+                    <select value={automobile} onChange={handleAutomobileChange} required name="automobile" className="form-select">
                     <option value="">Choose a Automobile</option>
                     {automobiles.map(automobile => {
                             return (
-                                <option key={automobile.id} value={automobile.import_href}>
+                                <option key={automobile.vin} value={automobile.import_href}>
                                 {automobile.vin}
                                 </option>
                             );
@@ -142,7 +150,7 @@ useEffect(() => {
                     </select>
                 </div>
                 <div className="mb-3">
-                    <select value={salesperson} onChange={handleSalesPersonChange} required  name="salespersons" className="form-select">
+                    <select value={salesperson} onChange={handleSalesPersonChange} required  name="salesperson" className="form-select">
                     <option value="">Choose a Sales Person</option>
                     {salespersons.map(salesperson => {
                             return (
