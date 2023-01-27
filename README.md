@@ -17,6 +17,9 @@ The sales microservice tracks and manages car sales, including adding sales, vie
 
 The service microservice manages the technicians, scheduling of appointments, viewing appointment lists, and displaying the service history.
 
+## CarCar Application Diagram
+
+![CarCar Application Diagram](project_beta_diagram.png)
 
 ## Getting Started
 
