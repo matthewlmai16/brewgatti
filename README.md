@@ -550,5 +550,230 @@ Returns:
 
 ## Sales microservice
 
-Explain your models and integration with the inventory
-microservice, here.
+The Sales Microservice has four models: AutoVO, SalesPerson, Customer and SalesRecord. The AutoVO model is a value object which is a representation of the Automobile Model in the ***Inventory Microservice***.
+
+The ```AutoVO``` model contains the ```color```, ```year```, ```vin```, ```available```, ```import_href``` fields.
+
+The ```SalesPerson``` model contains the ```name``` and ```employee_number``` fields to store a sales employee information in the database.
+
+The ```Customer``` model contains the ```name```, ```address```,  and ```phone_number``` field to store customer information in the database.
+
+The ```SalesRecord``` model contains a  ```automobile``` field which is a foreign key to the ```AutoVO``` model as there can be many automobiles to record a sale for. It contains a ```salesperson``` field  which is a foreign key to the ```SalesPerson``` model as we need to have an existing SalesPerson to be able to record a sales record. It also contains a ```customer``` field which is a foreign key to the ```Customer``` model as we need to have an existing customer to be able to record a sales record. Lastly, it has a ```sales_price``` field to record the price the automobile was sold for.
+
+An extra note: the AutoVO model has an additional property that the Automobile Model does not, which is the ***Available*** property. This will allow us to filter only vehicles that are available, meaning those that have not been sold, in order to create a Sales Record and avoid any confusion while selling a car. A vehicle created in the AutoVO model has a default available status set to **"True"** until a Sales Record is created with that vehicle vin.
+
+
+There is a ***poll*** function that allows the Sales microservice to poll the Inventory every 60 seconds to make sure the Sales Microservice data is up to date. Every time the Sales Microservice polls the Inventory API, it either updates or creates an AutoVO instance.
+
+
+In order to create a Sales Record, an automobile, customer and salesperson will have to be created. The Sales Record uses the ```href``` variable of the Automobile model as the value. Please refer to the example below.
+
+The back-end of the Sales Microservices can be found following this path ***sales/api/sales_rest/views.py***. There is a view function for each model to properly ensure the back-end data is being created and stored properly. There is also an encoder for each view function to be able to parse through the data. For your convenience, we’ve added the required JSON Body beneath the RESTFul API table to be able to test these API calls through the Insomnia APP.
+
+
+
+### Sales Microservice RESTful API calls
+
+| Action  | Method   | URL   |
+|---|---|---|
+| List of all Sales People | GET  | http://localhost:8090/api/salesperson  |
+| Show Sales Person Details  | GET  |  http://localhost:8090/api/salesperson/:id/  |
+| Create a Sales Person  | POST   | http://localhost:8090/api/salesperson/ |
+
+<details>
+<summary markdown="span">POST: Creating a sales person requires the name and employee number.
+</summary>
+JSON request body:
+
+```
+{
+	"name": "John Smith",
+	"employee_number": "1112"
+}
+```
+</details>
+
+<details>
+<summary markdown="span">POST, PUT: The return values of creating and getting a single sales person is the name, employee_number and id.
+</summary>
+Returns:
+
+```
+{
+	"name": "Anthony P",
+	"employee_number": "1111",
+	"id": 1
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET: The return value of getting a list of sales people is a dictionary with the key *sales_staff* set to a list of sales people.
+</summary>
+Returns:
+
+```
+{
+	"sales_staff": [
+		{
+			"name": "Paul K",
+			"employee_number": "1112",
+			"id": 2
+		},
+		{
+			"name": "Anthony P",
+			"employee_number": "1111",
+			"id": 1
+		}
+	]
+}
+```
+</details>
+
+| Action  | Method   | URL   |
+|---|---|---|
+| List all Customers  | GET | http://localhost:8090/api/customers/   |
+| Show a Customer Details  | GET  | http://localhost:8090/api/customers/:id/  |
+| Create a Customer  | POST  | http://localhost:8090/api/customers/ |
+
+<details>
+<summary markdown="span">POST: Creating a Customer requires the name, address and phone number.
+</summary>
+JSON body request:
+
+```
+{
+	"name": "Kenny G",
+	"address": "1234 Main St, Local City, CA",
+	"phone_number": "9995555555"
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET, POST: The return values of creating and getting a customer will return the name, address, phone_number and id.
+</summary>
+Returns:
+
+```
+{
+	"name": "Kenny G",
+	"address": "1234 Main St, Local City, CA",
+	"phone_number": "9995555555",
+	"id": 4
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET: The return value of getting a list of customers is a dictionary with the key *customers* set to a list of customers.
+</summary>
+Returns:
+
+```
+{
+	"customers": [
+		{
+			"name": "Alex P",
+			"address": "1234 Main Street, Santa Anita",
+			"phone_number": "7148081452",
+			"id": 1
+		},
+		{
+			"name": "Randy T",
+			"address": "1221 85th Street, Santa Ana",
+			"phone_number": "7143342111",
+			"id": 3
+		}
+
+	]
+}
+```
+</details>
+
+| Action  | Method   | URL   |
+|---|---|---|
+| List all Sales Records | GET  | http://localhost:8090/api/salesrecords/ |
+| Show a Sales Record Detail  | GET  | http://localhost:8090/api/salesrecords/:id/ |
+| Create a Sales Record  | POST   | http://localhost:8090/api/salesrecords/  |
+
+<details>
+<summary markdown="span">POST: Creating a sales record requires the automobile which is an href from the Automobile model, the salesperson’s name, the customer and the sales_price
+</summary>
+JSON body request:
+
+```
+{
+	"automobile": "/api/automobiles/5N1ED28T4YC520944/",
+	"salesperson": "Paul K",
+	"customer": "Roo P",
+	"sales_price": "60000"
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET: The return of getting a single sales record include the details of the automobile, salesperson, customer and sales_price along with the sales_record id which is generated per each sales record created.
+</summary>
+Returns:
+
+```
+{
+	"automobile": {
+		"color": "Blue",
+		"year": 2013,
+		"vin": "1A23456789",
+		"available": false,
+		"import_href": "/api/automobiles/1A23456789/"
+	},
+	"salesperson": {
+		"name": "Paul K",
+		"employee_number": "1112",
+		"id": 2
+	},
+	"customer": {
+		"name": "Alex P",
+		"address": "1234 Main Street, Santa Anita",
+		"phone_number": "7138081452",
+		"id": 1
+	},
+	"sales_price": "65000",
+	"id": 2
+}
+```
+</details>
+
+<details>
+<summary markdown="span">GET: The return of getting all the sales records is a dictionary with the key *sales* set to a list of sales records.
+</summary>
+Returns:
+
+```
+{
+	"sales": [
+		{
+			"automobile": {
+				"color": "gray",
+				"year": 2014,
+				"vin": "1C3CC5FB2AN120174",
+				"available": false,
+				"import_href": "/api/automobiles/1C3CC5FB2AN120174/"
+			},
+			"salesperson": {
+				"name": "Anthony P",
+				"employee_number": "1111",
+				"id": 1
+			},
+			"customer": {
+				"name": "Kenny G",
+				"address": "1234 Main St, Local City, CA",
+				"phone_number": "9995555555",
+				"id": 4
+			},
+			"sales_price": "51000",
+			"id": 1
+		}
+	]
+}
+```
+</details>
