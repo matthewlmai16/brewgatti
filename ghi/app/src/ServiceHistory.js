@@ -1,10 +1,11 @@
 import './index.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 
-function ServiceHistory({appointments, setAppointments}) {
+function ServiceHistory({appointments, setAppointments, getAppointments}) {
 
     const [vinSearch, setVin] = useState('')
+    const [updatedStatus, setStatus] = useState(false)
 
     const handleSearchInput = (event) => {
         const value = event.target.value;
@@ -20,6 +21,27 @@ function ServiceHistory({appointments, setAppointments}) {
         );
         setAppointments(filteredAppointments)
         }
+
+    const handleStatusChange = async (id) => {
+        const updatedAppointments = appointments.map(appointment => {
+            if (appointment.id === id) {
+                appointment.finished = !appointment.finished;
+            }
+            return appointment;
+        });
+        setAppointments(updatedAppointments);
+
+        const appointment = appointments.find(appointment => appointment.id === id);
+        const url = `http://localhost:8080/api/appointments/${id}/`
+        const fetchConfig = {
+            method: 'put',
+            body: JSON.stringify({finished: appointment.finished}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        const response = await fetch(url, fetchConfig)
+    }
 
 
     return (
@@ -67,13 +89,13 @@ function ServiceHistory({appointments, setAppointments}) {
                     <td>{ appointment.technician_name.technician_name }</td>
                     <td>{ appointment.reason }</td>
                     <td>{ appointment.finished ?
-                            <img
+                            <img onClick={() => handleStatusChange(appointment.id)}
                                 src={'https://cdn-icons-png.flaticon.com/512/4315/4315445.png'}
                                 alt=""
                                 width="25px"
                                 height="25px"
                             />:
-                            <img
+                            <img onClick={() => handleStatusChange(appointment.id)}
                                 src={'https://cdn-icons-png.flaticon.com/512/463/463575.png'}
                                 alt=""
                                 width="25px"
