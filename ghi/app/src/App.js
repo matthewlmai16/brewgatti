@@ -84,10 +84,11 @@ function App() {
   return (
     <BrowserRouter>
       <Nav />
-      <div className="container">
-        <Routes>
+      <Routes>
           <Route path="/" element={<MainPage />} />
-
+      </Routes>
+      <div className="container">
+      <Routes>
           {/* Routes for automobile */}
           <Route path="automobile">
             <Route path="new" element={<AutomobileForm/>} />
@@ -139,9 +140,8 @@ function App() {
           <Route path="services">
             <Route path="history" element={<ServiceHistory appointments={appointments} getAppointments={getAppointments} setAppointments={setAppointments}/>} />
           </Route>
-
         </Routes>
-      </div>
+        </div>
     </BrowserRouter>
   );
 }
